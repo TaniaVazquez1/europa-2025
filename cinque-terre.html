@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Cinque Terre · Europa 2026</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+:root {
+  --cream: #F7F3EE; --sand: #EDE6DB; --line: #DDD6CC; --muted: #8A8278;
+  --ink: #1C1C1C; --white: #FFFFFF; --terra: #C4633A; --gold: #B8892E;
+  --accent: #2A6B8E; --r: 10px;
+}
+body { background: var(--cream); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.5; }
+.back { display:flex; align-items:center; gap:8px; padding:12px 20px; background:#1C1C1C; color:rgba(247,243,238,.7); font-size:12px; text-decoration:none; }
+.back:hover { color:var(--gold); }
+.hero { background:#1C1C1C; color:var(--cream); padding:36px 20px 28px; position:relative; overflow:hidden; }
+.hero::after { content:'CINQUE TERRE'; position:absolute; right:-8px; top:-16px; font-family:Georgia,serif; font-size:100px; font-weight:bold; color:rgba(255,255,255,.04); line-height:1; pointer-events:none; user-select:none; }
+.hero-label { font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:8px; }
+.hero-title { font-family:Georgia,'Times New Roman',serif; font-size:36px; font-weight:normal; line-height:1.1; margin-bottom:4px; }
+.hero-title em { color:var(--gold); font-style:italic; }
+.hero-sub { font-size:12px; color:rgba(247,243,238,.55); margin-top:6px; }
+.chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:18px; }
+.chip { font-size:11px; padding:5px 12px; border:1px solid rgba(247,243,238,.2); border-radius:99px; color:rgba(247,243,238,.8); white-space:nowrap; }
+.main { padding:24px 14px 60px; max-width:680px; margin:0 auto; }
+.coming-soon { background:var(--white); border:1px solid var(--line); border-radius:var(--r); padding:32px 20px; text-align:center; margin-bottom:16px; }
+.coming-soon-icon { font-size:40px; margin-bottom:12px; }
+.coming-soon h2 { font-family:Georgia,serif; font-size:18px; font-weight:normal; color:var(--ink); margin-bottom:8px; }
+.coming-soon p { font-size:13px; color:var(--muted); line-height:1.6; }
+.note { font-size:12px; color:#6A6258; background:var(--sand); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; padding:10px 12px; margin-top:14px; line-height:1.6; }
+.transport { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--muted); padding:10px 14px; background:var(--white); border:1px solid var(--line); border-radius:var(--r); margin-top:12px; }
+.footer { text-align:center; padding:24px; font-size:11px; color:var(--muted); }
+</style>
+</head>
+<body>
+<a class="back" href="index.html">‹ Volver al inicio</a>
+<div class="hero">
+  <div class="hero-label">Viaje · Europa 2026</div>
+  <h1 class="hero-title">🌊 <em>Cinque Terre</em></h1>
+  <div class="hero-sub">Airbnb en Vernazza · Via Gavino, 22</div>
+  <div class="chips">
+    <div class="chip">📅 1 – 4 julio · 3 noches</div>
+  </div>
+</div>
+<div class="main">
+  <div class="coming-soon">
+    <div class="coming-soon-icon">✍️</div>
+    <h2>Itinerario en construcción</h2>
+    <p>Las recomendaciones y el plan detallado de Cinque Terre se están armando. Vuelve pronto.</p>
+  </div>
+  <div class="note">💡 Vernazza es el pueblo base. Hike Vernazza–Monterosso o al revés. Preguntar a la del Airbnb si presta su bote.</div>
+  <div class="transport">🚂 Tren 4:51 am Vernazza → Milán Bérgamo · Vuelo 1:10 pm → Barcelona</div>
+</div>
+<div class="footer">Europa · Verano 2026 🤍</div>
+</body>
+</html>
