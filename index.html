@@ -1,541 +1,216 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Europa 2026 · Tania, Marycruz & Maria Jose</title>
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { -webkit-text-size-adjust: 100%; }
-:root {
-  --cream: #F7F3EE;
-  --sand:  #EDE6DB;
-  --line:  #DDD6CC;
-  --muted: #8A8278;
-  --ink:   #1C1C1C;
-  --white: #FFFFFF;
-  --terra: #C4633A;
-  --gold:  #B8892E;
-  --r: 12px;
-}
-body {
-  background: var(--cream);
-  color: var(--ink);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  min-height: 100vh;
-}
-
-/* ── HERO ── */
-.hero {
-  background: #1C1C1C;
-  color: var(--cream);
-  padding: 52px 24px 40px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.hero::after {
-  content: 'EUROPA';
-  position: absolute;
-  left: 50%; top: -10px;
-  transform: translateX(-50%);
-  font-family: Georgia, serif;
-  font-size: 120px;
-  font-weight: bold;
-  color: rgba(255,255,255,.03);
-  letter-spacing: -2px;
-  white-space: nowrap;
-  pointer-events: none;
-  user-select: none;
-}
-.hero-label {
-  font-size: 10px;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  font-weight: 600;
-  margin-bottom: 12px;
-}
-.hero-title {
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 42px;
-  font-weight: normal;
-  line-height: 1.1;
-  margin-bottom: 6px;
-}
-.hero-title em { color: var(--gold); font-style: italic; }
-.hero-names {
-  font-size: 13px;
-  color: rgba(247,243,238,.55);
-  margin-top: 8px;
-  letter-spacing: .04em;
-}
-.hero-stats {
-  display: flex;
-  justify-content: center;
-  gap: 0;
-  margin-top: 28px;
-  border-top: 1px solid rgba(255,255,255,.08);
-  padding-top: 20px;
-}
-.stat {
-  flex: 1;
-  max-width: 100px;
-  text-align: center;
-}
-.stat + .stat { border-left: 1px solid rgba(255,255,255,.08); }
-.stat-num {
-  font-family: Georgia, serif;
-  font-size: 26px;
-  color: var(--gold);
-  line-height: 1;
-}
-.stat-label {
-  font-size: 10px;
-  color: rgba(247,243,238,.4);
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  margin-top: 4px;
-}
-
-/* ── TIMELINE STRIP ── */
-.strip {
-  background: var(--sand);
-  border-bottom: 1px solid var(--line);
-  padding: 14px 20px;
-  overflow-x: auto;
-  white-space: nowrap;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-.strip::-webkit-scrollbar { display: none; }
-.strip-inner {
-  display: inline-flex;
-  align-items: center;
-  gap: 0;
-  min-width: max-content;
-}
-.strip-city {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  color: var(--muted);
-}
-.strip-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--terra);
-  flex-shrink: 0;
-}
-.strip-name { font-weight: 600; color: var(--ink); }
-.strip-date { color: var(--muted); }
-.strip-arrow {
-  font-size: 12px;
-  color: var(--line);
-  margin: 0 10px;
-}
-
-/* ── MAIN ── */
-.main { padding: 20px 14px 60px; max-width: 680px; margin: 0 auto; }
-
-/* ── SECTION LABEL ── */
-.section-title {
-  font-size: 10px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--muted);
-  font-weight: 600;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.section-title::after { content: ''; flex: 1; height: 1px; background: var(--line); }
-
-/* ── CITY CARD ── */
-.city-card {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  padding: 14px 16px;
-  margin-bottom: 10px;
-  text-decoration: none;
-  color: inherit;
-  transition: box-shadow .2s, border-color .2s;
-  -webkit-tap-highlight-color: transparent;
-  cursor: pointer;
-}
-.city-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08); border-color: var(--terra); }
-.city-card.disabled { opacity: .5; cursor: default; pointer-events: none; }
-
-.city-flag {
-  font-size: 28px;
-  flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--sand);
-  border-radius: 10px;
-}
-.city-info { flex: 1; min-width: 0; }
-.city-name {
-  font-family: Georgia, serif;
-  font-size: 17px;
-  font-weight: normal;
-  color: var(--ink);
-  line-height: 1.2;
-}
-.city-dates { font-size: 11px; color: var(--muted); margin-top: 3px; }
-.city-sub { font-size: 11px; color: var(--muted); margin-top: 2px; font-style: italic; }
-.city-arrow { font-size: 18px; color: var(--line); flex-shrink: 0; }
-.city-card:hover .city-arrow { color: var(--terra); }
-
-.city-badge {
-  font-size: 9px;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 99px;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.badge-ready { background: #EEF3EC; color: #3A5C20; }
-.badge-soon  { background: #FBF5E8; color: #7A5C10; }
-.badge-wip   { background: var(--sand); color: var(--muted); }
-
-/* ── TRANSPORT CHIP ── */
-.transport {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  color: var(--muted);
-  padding: 8px 14px;
-  background: var(--sand);
-  border-radius: 99px;
-  margin: 4px 0 10px 58px;
-  width: fit-content;
-}
-
-/* ── TICKETS SECTION ── */
-.tickets-box {
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  overflow: hidden;
-}
-.ticket-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 11px 14px;
-  border-bottom: 1px solid var(--line);
-  flex-wrap: wrap;
-}
-.ticket-row:last-child { border-bottom: none; }
-.ticket-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
-.ticket-icon {
-  font-size: 16px;
-  width: 34px; height: 34px;
-  background: var(--sand);
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.ticket-info { min-width: 0; }
-.ticket-route { font-size: 13px; font-weight: 600; color: var(--ink); line-height: 1.3; }
-.ticket-detail { font-size: 11px; color: var(--muted); margin-top: 1px; }
-.ticket-btn {
-  font-size: 11px; font-weight: 600;
-  color: var(--white); background: var(--terra);
-  padding: 5px 13px; border-radius: 99px;
-  text-decoration: none; white-space: nowrap; flex-shrink: 0;
-}
-
-/* ── FOOTER ── */
-.footer { text-align: center; padding: 24px; font-size: 11px; color: var(--muted); }
-
-@supports (padding-bottom: env(safe-area-inset-bottom)) {
-  .main { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
-}
+  :root{--accent:#C4633A;--accent2:#B8892E;--paper:#F7F3EE;--ink:#23201c;--muted:#857c70;--line:#e7ded0;--card:#fffdf9;--ink2:#1C1C1C}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;background:var(--paper);color:var(--ink);min-height:100vh}
+  .wrap{max-width:640px;margin:0 auto;padding:0 16px}
+  /* HERO */
+  .hero{background:var(--ink2);color:var(--paper);padding:50px 22px 34px;text-align:center;position:relative;overflow:hidden}
+  .hero::after{content:'EUROPA';position:absolute;left:50%;top:-6px;transform:translateX(-50%);
+    font-size:120px;font-weight:700;color:rgba(255,255,255,.035);letter-spacing:-2px;white-space:nowrap;pointer-events:none}
+  .h-rel{position:relative}
+  .h-eyebrow{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent2);font-weight:700;margin-bottom:12px}
+  .h-title{font-size:2.9rem;line-height:1.05}
+  .h-title em{color:var(--accent2);font-style:italic}
+  .h-names{font-size:.84rem;color:rgba(247,243,238,.6);margin-top:8px;letter-spacing:.04em}
+  .stats{display:flex;justify-content:center;margin-top:26px;border-top:1px solid rgba(255,255,255,.1);padding-top:18px}
+  .stat{flex:1;max-width:110px}
+  .stat + .stat{border-left:1px solid rgba(255,255,255,.1)}
+  .stat b{display:block;font-size:1.7rem;color:var(--accent2);line-height:1}
+  .stat span{font-size:.6rem;color:rgba(247,243,238,.45);letter-spacing:.08em;text-transform:uppercase;margin-top:5px;display:block}
+  /* STRIP */
+  .strip{background:#EDE6DB;border-bottom:1px solid var(--line);padding:12px 16px;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+  .strip::-webkit-scrollbar{display:none}
+  .strip-in{display:inline-flex;align-items:center;min-width:max-content;font-size:.72rem;color:var(--muted)}
+  .s-city{display:inline-flex;align-items:center;gap:5px}
+  .s-city b{color:var(--ink)}
+  .s-dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .s-arr{margin:0 9px;color:var(--line)}
+  /* MAIN */
+  main{padding:22px 0 60px}
+  .sec-title{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700;
+    margin:22px 2px 12px;display:flex;align-items:center;gap:10px}
+  .sec-title::after{content:"";flex:1;height:1px;background:var(--line)}
+  .ccard{display:flex;align-items:center;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:13px 15px 13px 0;margin-bottom:10px;text-decoration:none;color:inherit;overflow:hidden;
+    transition:box-shadow .2s,border-color .2s}
+  .ccard:hover{box-shadow:0 6px 22px -10px rgba(0,0,0,.28);border-color:var(--c)}
+  .cc-bar{width:5px;align-self:stretch;background:var(--c);flex-shrink:0}
+  .cc-flag{font-size:1.5rem;width:42px;height:42px;display:flex;align-items:center;justify-content:center;
+    background:color-mix(in srgb,var(--c) 13%,#fff);border-radius:10px;flex-shrink:0}
+  .cc-info{flex:1;min-width:0;display:flex;flex-direction:column}
+  .cc-name{font-size:1.12rem;font-weight:700;line-height:1.15}
+  .cc-dates{font-size:.74rem;color:var(--muted);margin-top:2px}
+  .cc-sub{font-size:.74rem;color:var(--muted);font-style:italic;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cc-badge{font-size:.6rem;font-weight:700;padding:2px 8px;border-radius:999px;background:#EEF3EC;color:#3A5C20;flex-shrink:0}
+  .cc-go{font-size:1.2rem;color:var(--c);flex-shrink:0;padding-right:4px}
+  .trans{display:inline-flex;font-size:.72rem;color:var(--muted);padding:7px 13px;background:#EDE6DB;
+    border-radius:999px;margin:2px 0 10px 47px}
+  /* TICKETS */
+  .tbox{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 15px;margin-top:6px}
+  .trow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .trow:last-child{border-bottom:none}
+  .t-ic{font-size:1rem;width:34px;height:34px;background:#EDE6DB;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .tinfo b{font-size:.86rem;display:block}
+  .tinfo span{font-size:.74rem;color:var(--muted)}
+  .tbtn{font-size:.74rem;font-weight:700;color:#fff;background:var(--accent);padding:6px 13px;border-radius:999px;text-decoration:none;white-space:nowrap;flex-shrink:0}
+  .t-pend{font-size:.74rem;color:var(--muted);font-style:italic}
+  .footer{text-align:center;padding:26px 20px 0;font-size:.74rem;color:var(--muted);letter-spacing:.03em}
 </style>
 </head>
 <body>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-label">Viaje · Verano 2026</div>
-  <h1 class="hero-title">La gran <em>aventura</em></h1>
-  <div class="hero-names">Tania · Marycruz · Maria Jose</div>
-  <div class="hero-stats">
-    <div class="stat"><div class="stat-num">20</div><div class="stat-label">días</div></div>
-    <div class="stat"><div class="stat-num">8</div><div class="stat-label">ciudades</div></div>
-    <div class="stat"><div class="stat-num">3</div><div class="stat-label">países</div></div>
-  </div>
-</div>
-
-<!-- TIMELINE STRIP -->
-<div class="strip">
-  <div class="strip-inner">
-    <div class="strip-city"><span class="strip-dot"></span><span class="strip-name">Oporto</span><span class="strip-date">&nbsp;21–23 jun</span></div>
-    <span class="strip-arrow">→</span>
-    <div class="strip-city"><span class="strip-dot"></span><span class="strip-name">Lisboa</span><span class="strip-date">&nbsp;23–25 jun</span></div>
-    <span class="strip-arrow">→</span>
-    <div class="strip-city"><span class="strip-dot"></span><span class="strip-name">Roma</span><span class="strip-date">&nbsp;25–29 jun</span></div>
-    <span class="strip-arrow">→</span>
-    <div class="strip-city"><span class="strip-dot"></span><span class="strip-name">Florencia</span><span class="strip-date">&nbsp;29 jun–1 jul</span></div>
-    <span class="strip-arrow">→</span>
-    <div class="strip-city"><span class="strip-dot"></span><span class="strip-name">Cinque Terre</span><span class="strip-date">&nbsp;1–4 jul</span></div>
-    <span class="strip-arrow">→</span>
-    <div class="strip-city"><span class="strip-dot"></span><span class="strip-name">Barcelona</span><span class="strip-date">&nbsp;4–5 jul</span></div>
-    <span class="strip-arrow">→</span>
-    <div class="strip-city"><span class="strip-dot"></span><span class="strip-name">Pamplona</span><span class="strip-date">&nbsp;5–6 jul</span></div>
-    <span class="strip-arrow">→</span>
-    <div class="strip-city"><span class="strip-dot"></span><span class="strip-name">Madrid</span><span class="strip-date">&nbsp;7–10 jul</span></div>
-  </div>
-</div>
-
-<!-- MAIN -->
-<div class="main">
-
-  <!-- PORTUGAL -->
-  <div class="section-title">🇵🇹 Portugal</div>
-
-  <a class="city-card" href="oporto.html">
-    <div class="city-flag">🏙️</div>
-    <div class="city-info">
-      <div class="city-name">Oporto</div>
-      <div class="city-dates">21 – 23 junio · 2 noches</div>
-      <div class="city-sub">Almada 346 · Vuelo llega 9:10 am</div>
+  <header class="hero"><div class="h-rel">
+    <div class="h-eyebrow">Viaje · Verano 2026</div>
+    <h1 class="h-title">Tour por <em>Europa</em></h1>
+    <div class="h-names">Tania · Marycruz · Maria Jose</div>
+    <div class="stats">
+      <div class="stat"><b>20</b><span>días</span></div>
+      <div class="stat"><b>8</b><span>ciudades</span></div>
+      <div class="stat"><b>3</b><span>países</span></div>
     </div>
-    <span class="city-badge badge-wip">En progreso</span>
-    <div class="city-arrow">›</div>
-  </a>
+  </div></header>
 
-  <div class="transport">🚌 Bus 9:30 am → Lisboa · llega 12:45 pm</div>
+  <div class="strip"><div class="strip-in"><span class='s-city'><span class='s-dot'></span><b>Oporto</b> <span>21–23 jun</span></span><span class='s-arr'>→</span><span class='s-city'><span class='s-dot'></span><b>Lisboa</b> <span>23–25 jun</span></span><span class='s-arr'>→</span><span class='s-city'><span class='s-dot'></span><b>Roma</b> <span>25–29 jun</span></span><span class='s-arr'>→</span><span class='s-city'><span class='s-dot'></span><b>Florencia</b> <span>29 jun–1 jul</span></span><span class='s-arr'>→</span><span class='s-city'><span class='s-dot'></span><b>Cinque Terre</b> <span>1–4 jul</span></span><span class='s-arr'>→</span><span class='s-city'><span class='s-dot'></span><b>Barcelona</b> <span>4–5 jul</span></span><span class='s-arr'>→</span><span class='s-city'><span class='s-dot'></span><b>Pamplona</b> <span>5–7 jul</span></span><span class='s-arr'>→</span><span class='s-city'><span class='s-dot'></span><b>Madrid</b> <span>7–10 jul</span></span></div></div>
 
-  <a class="city-card" href="lisboa.html">
-    <div class="city-flag">🌊</div>
-    <div class="city-info">
-      <div class="city-name">Lisboa</div>
-      <div class="city-dates">23 – 25 junio · 2 noches</div>
-      <div class="city-sub">Hotel Lift Apartments by RIDAN</div>
-    </div>
-    <span class="city-badge badge-ready">Listo ✓</span>
-    <div class="city-arrow">›</div>
-  </a>
+  <main class="wrap">
+<div class="sec-title">🇵🇹 Portugal</div>
+    <a class="ccard" href="oporto.html" style="--c:#1F5C8B">
+      <span class="cc-bar"></span>
+      <span class="cc-flag">🏙️</span>
+      <span class="cc-info"><span class="cc-name">Oporto</span>
+        <span class="cc-dates">21 – 23 jun · 2 noches</span>
+        <span class="cc-sub">BO-Almada 346</span></span>
+      <span class="cc-badge">Listo ✓</span><span class="cc-go">›</span>
+    </a>
+    <div class="trans">🚌 Bus 9:30 am → Lisboa · llega 12:45 pm</div>
+    <a class="ccard" href="lisboa.html" style="--c:#2A8C82">
+      <span class="cc-bar"></span>
+      <span class="cc-flag">🌊</span>
+      <span class="cc-info"><span class="cc-name">Lisboa</span>
+        <span class="cc-dates">23 – 25 jun · 2 noches</span>
+        <span class="cc-sub">Lift Apartments by RIDAN</span></span>
+      <span class="cc-badge">Listo ✓</span><span class="cc-go">›</span>
+    </a>
+    <div class="trans">✈️ Vuelo 8:45 am → Roma · llega 12:45 pm</div>
+<div class="sec-title">🇮🇹 Italia</div>
+    <a class="ccard" href="roma.html" style="--c:#C4633A">
+      <span class="cc-bar"></span>
+      <span class="cc-flag">🏛️</span>
+      <span class="cc-info"><span class="cc-name">Roma</span>
+        <span class="cc-dates">25 – 29 jun · 4 noches</span>
+        <span class="cc-sub">Imperium Suite Trevi</span></span>
+      <span class="cc-badge">Listo ✓</span><span class="cc-go">›</span>
+    </a>
+    <div class="trans">🚂 Tren 8:50 am → Florencia · llega 10:27 am</div>
+    <a class="ccard" href="florencia.html" style="--c:#9C4A2F">
+      <span class="cc-bar"></span>
+      <span class="cc-flag">🌸</span>
+      <span class="cc-info"><span class="cc-name">Florencia</span>
+        <span class="cc-dates">29 jun – 1 jul · 2 noches</span>
+        <span class="cc-sub">Solo Experience</span></span>
+      <span class="cc-badge">Listo ✓</span><span class="cc-go">›</span>
+    </a>
+    <div class="trans">🚂 Tren 7:54 am → Cinque Terre · llega 10:07 am</div>
+    <a class="ccard" href="cinque-terre.html" style="--c:#1C7C8C">
+      <span class="cc-bar"></span>
+      <span class="cc-flag">🌅</span>
+      <span class="cc-info"><span class="cc-name">Cinque Terre</span>
+        <span class="cc-dates">1 – 4 jul · 3 noches</span>
+        <span class="cc-sub">Airbnb Vernazza · Via Gavino 22</span></span>
+      <span class="cc-badge">Listo ✓</span><span class="cc-go">›</span>
+    </a>
+    <div class="trans">🚂 Tren 4:51 am → Milán · ✈️ Vuelo 1:10 pm → Barcelona</div>
+<div class="sec-title">🇪🇸 España</div>
+    <a class="ccard" href="barcelona.html" style="--c:#C24E3A">
+      <span class="cc-bar"></span>
+      <span class="cc-flag">🌴</span>
+      <span class="cc-info"><span class="cc-name">Barcelona</span>
+        <span class="cc-dates">4 – 5 jul · 1 noche</span>
+        <span class="cc-sub">Allegro · Rosselló 205</span></span>
+      <span class="cc-badge">Listo ✓</span><span class="cc-go">›</span>
+    </a>
+    <div class="trans">🚂 Tren 12:50 pm Sants → Pamplona · llega 5:24 pm</div>
+    <a class="ccard" href="pamplona.html" style="--c:#C8102E">
+      <span class="cc-bar"></span>
+      <span class="cc-flag">🐂</span>
+      <span class="cc-info"><span class="cc-name">Pamplona</span>
+        <span class="cc-dates">5 – 7 jul · 2 noches</span>
+        <span class="cc-sub">San Fermín 🎉</span></span>
+      <span class="cc-badge">Listo ✓</span><span class="cc-go">›</span>
+    </a>
+    <div class="trans">🚂 Tren ~mediodía (7 jul) → Madrid · llega 4:37 pm</div>
+    <a class="ccard" href="madrid.html" style="--c:#A4123F">
+      <span class="cc-bar"></span>
+      <span class="cc-flag">🌹</span>
+      <span class="cc-info"><span class="cc-name">Madrid</span>
+        <span class="cc-dates">7 – 10 jul · 3 noches</span>
+        <span class="cc-sub">Numa Fuencarral</span></span>
+      <span class="cc-badge">Listo ✓</span><span class="cc-go">›</span>
+    </a>
+    <div class="trans">✈️ Vuelo 2:35 pm → México 🇲🇽</div>
 
-  <div class="transport">✈️ Vuelo 8:45 am → Roma · llega 12:45 pm</div>
-
-  <!-- ITALIA -->
-  <div class="section-title" style="margin-top:20px;">🇮🇹 Italia</div>
-
-  <a class="city-card" href="roma.html">
-    <div class="city-flag">🏛️</div>
-    <div class="city-info">
-      <div class="city-name">Roma</div>
-      <div class="city-dates">25 – 29 junio · 4 noches</div>
-      <div class="city-sub">Hotel Imperium Suite Trevi</div>
-    </div>
-    <span class="city-badge badge-ready">Listo ✓</span>
-    <div class="city-arrow">›</div>
-  </a>
-
-  <div class="transport">🚂 Tren 8:50 am → Florencia · llega 10:27 am</div>
-
-  <a class="city-card" href="florencia.html">
-    <div class="city-flag">🌸</div>
-    <div class="city-info">
-      <div class="city-name">Florencia</div>
-      <div class="city-dates">29 junio – 1 julio · 2 noches</div>
-      <div class="city-sub">Hotel Solo Experience</div>
-    </div>
-    <span class="city-badge badge-wip">En progreso</span>
-    <div class="city-arrow">›</div>
-  </a>
-
-  <div class="transport">🚂 Tren 7:54 am → Cinque Terre · llega 10:07 am</div>
-
-  <a class="city-card" href="cinque-terre.html">
-    <div class="city-flag">🌊</div>
-    <div class="city-info">
-      <div class="city-name">Cinque Terre</div>
-      <div class="city-dates">1 – 4 julio · 3 noches</div>
-      <div class="city-sub">Airbnb en Vernazza · Via Gavino, 22</div>
-    </div>
-    <span class="city-badge badge-wip">En progreso</span>
-    <div class="city-arrow">›</div>
-  </a>
-
-  <div class="transport">🚂 Tren 4:51 am → Milán Bérgamo · Vuelo 1:10 pm → Barcelona</div>
-
-  <!-- ESPAÑA -->
-  <div class="section-title" style="margin-top:20px;">🇪🇸 España</div>
-
-  <a class="city-card" href="barcelona.html">
-    <div class="city-flag">🌴</div>
-    <div class="city-info">
-      <div class="city-name">Barcelona</div>
-      <div class="city-dates">4 – 5 julio · 1 noche</div>
-      <div class="city-sub">Hotel Allegro · Carrer del Rosselló 205</div>
-    </div>
-    <span class="city-badge badge-wip">En progreso</span>
-    <div class="city-arrow">›</div>
-  </a>
-
-  <div class="transport">🚂 Tren 12:50 pm Barcelona Sants → Pamplona · llega 5:24 pm</div>
-
-  <a class="city-card" href="pamplona.html">
-    <div class="city-flag">🐂</div>
-    <div class="city-info">
-      <div class="city-name">Pamplona</div>
-      <div class="city-dates">5 – 6 julio · 1 noche</div>
-      <div class="city-sub">San Fermín 🎉</div>
-    </div>
-    <span class="city-badge badge-wip">En progreso</span>
-    <div class="city-arrow">›</div>
-  </a>
-
-  <div class="transport">🚂 Tren 11:59 am → Madrid · llega 4:37 pm</div>
-
-  <a class="city-card" href="madrid.html">
-    <div class="city-flag">🌹</div>
-    <div class="city-info">
-      <div class="city-name">Madrid</div>
-      <div class="city-dates">7 – 10 julio · 3 noches</div>
-      <div class="city-sub">Hotel Numa Madrid Fuencarral</div>
-    </div>
-    <span class="city-badge badge-wip">En progreso</span>
-    <div class="city-arrow">›</div>
-  </a>
-
-  <div class="transport">✈️ Vuelo 2:35 pm → México 🇲🇽</div>
-
-  <!-- TICKETS DE TRANSPORTE -->
-  <div class="section-title" style="margin-top:28px;">🎫 Vuelos & Trenes</div>
-  <div class="tickets-box">
-
-    <div class="ticket-row">
-      <div class="ticket-left">
-        <div class="ticket-icon">✈️</div>
-        <div class="ticket-info">
-          <div class="ticket-route">México → Oporto</div>
-          <div class="ticket-detail">21 jun · Sale México · Vuelo de ida</div>
-        </div>
+    <div class="sec-title">🎫 Vuelos &amp; Trenes</div>
+    <div class="tbox">
+      <div class="trow">
+        <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+          <span class="t-ic">✈️</span>
+          <span class="tinfo"><b>México → Oporto</b><span>21 jun · vuelo de ida</span></span>
+        </div><a class="tbtn" href="tickets/vuelo_madrid_porto.pdf" target="_blank">Ver boleto →</a>
+      </div>      <div class="trow">
+        <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+          <span class="t-ic">🚌</span>
+          <span class="tinfo"><b>Oporto → Lisboa</b><span>23 jun · Bus 9:30 am</span></span>
+        </div><a class="tbtn" href="tickets/tren_porto_lisboa.pdf" target="_blank">Ver boleto →</a>
+      </div>      <div class="trow">
+        <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+          <span class="t-ic">✈️</span>
+          <span class="tinfo"><b>Lisboa → Roma</b><span>25 jun · Vuelo 8:45 am</span></span>
+        </div><a class="tbtn" href="tickets/vuelo_lisboa_roma.pdf" target="_blank">Ver boleto →</a>
+      </div>      <div class="trow">
+        <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+          <span class="t-ic">🚂</span>
+          <span class="tinfo"><b>Roma → Florencia</b><span>29 jun · Tren 8:50 am</span></span>
+        </div><a class="tbtn" href="tickets/tren_roma_florencia.pdf" target="_blank">Ver boleto →</a>
+      </div>      <div class="trow">
+        <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+          <span class="t-ic">🚂</span>
+          <span class="tinfo"><b>Florencia → Cinque Terre</b><span>1 jul · Tren 7:54 am</span></span>
+        </div><a class="tbtn" href="tickets/tren_florencia_cinqueterre.pdf" target="_blank">Ver boleto →</a>
+      </div>      <div class="trow">
+        <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+          <span class="t-ic">🚂</span>
+          <span class="tinfo"><b>Cinque Terre → Milán Bérgamo</b><span>4 jul · Tren 4:51 am</span></span>
+        </div><a class="tbtn" href="tickets/tren_cinqueterre_milan.pdf" target="_blank">Ver boleto →</a>
+      </div>      <div class="trow">
+        <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+          <span class="t-ic">✈️</span>
+          <span class="tinfo"><b>Milán → Barcelona</b><span>4 jul · Vuelo 1:10 pm</span></span>
+        </div><a class="tbtn" href="tickets/vuelo_milan_barcelona.pdf" target="_blank">Ver boleto →</a>
+      </div>      <div class="trow">
+        <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+          <span class="t-ic">🚂</span>
+          <span class="tinfo"><b>Barcelona → Pamplona</b><span>5 jul · Tren 12:50 pm</span></span>
+        </div><a class="tbtn" href="tickets/tren_barcelona_pamplona.pdf" target="_blank">Ver boleto →</a>
+      </div>      <div class="trow">
+        <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+          <span class="t-ic">🚂</span>
+          <span class="tinfo"><b>Pamplona → Madrid</b><span>7 jul · Tren ~mediodía</span></span>
+        </div><a class="tbtn" href="tickets/tren_pamplona_madrid.pdf" target="_blank">Ver boleto →</a>
+      </div>      <div class="trow">
+        <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+          <span class="t-ic">✈️</span>
+          <span class="tinfo"><b>Madrid → México 🇲🇽</b><span>10 jul · Vuelo 2:35 pm</span></span>
+        </div><span class="t-pend">pendiente</span>
       </div>
-      <a href="tickets/vuelo_madrid_porto.pdf" target="_blank" class="ticket-btn">Ver boleto →</a>
     </div>
 
-    <div class="ticket-row">
-      <div class="ticket-left">
-        <div class="ticket-icon">🚌</div>
-        <div class="ticket-info">
-          <div class="ticket-route">Oporto → Lisboa</div>
-          <div class="ticket-detail">23 jun · Bus 9:30 am · llega 12:45 pm</div>
-        </div>
-      </div>
-      <a href="tickets/tren_porto_lisboa.pdf" target="_blank" class="ticket-btn">Ver boleto →</a>
-    </div>
-
-    <div class="ticket-row">
-      <div class="ticket-left">
-        <div class="ticket-icon">✈️</div>
-        <div class="ticket-info">
-          <div class="ticket-route">Lisboa → Roma</div>
-          <div class="ticket-detail">25 jun · Vuelo 8:45 am · llega 12:45 pm</div>
-        </div>
-      </div>
-      <a href="tickets/vuelo_lisboa_roma.pdf" target="_blank" class="ticket-btn">Ver boleto →</a>
-    </div>
-
-    <div class="ticket-row">
-      <div class="ticket-left">
-        <div class="ticket-icon">🚂</div>
-        <div class="ticket-info">
-          <div class="ticket-route">Roma → Florencia</div>
-          <div class="ticket-detail">29 jun · Tren 8:50 am · llega 10:27 am</div>
-        </div>
-      </div>
-      <a href="tickets/tren_roma_florencia.pdf" target="_blank" class="ticket-btn">Ver boleto →</a>
-    </div>
-
-    <div class="ticket-row">
-      <div class="ticket-left">
-        <div class="ticket-icon">🚂</div>
-        <div class="ticket-info">
-          <div class="ticket-route">Florencia → Cinque Terre</div>
-          <div class="ticket-detail">1 jul · Tren 7:54 am · llega 10:07 am</div>
-        </div>
-      </div>
-      <a href="tickets/tren_florencia_cinqueterre.pdf" target="_blank" class="ticket-btn">Ver boleto →</a>
-    </div>
-
-    <div class="ticket-row">
-      <div class="ticket-left">
-        <div class="ticket-icon">🚂</div>
-        <div class="ticket-info">
-          <div class="ticket-route">Cinque Terre → Milán Bérgamo</div>
-          <div class="ticket-detail">4 jul · Tren 4:51 am · vuelo 1:10 pm</div>
-        </div>
-      </div>
-      <a href="tickets/tren_cinqueterre_milan.pdf" target="_blank" class="ticket-btn">Ver boleto →</a>
-    </div>
-
-    <div class="ticket-row">
-      <div class="ticket-left">
-        <div class="ticket-icon">✈️</div>
-        <div class="ticket-info">
-          <div class="ticket-route">Milán → Barcelona</div>
-          <div class="ticket-detail">4 jul · Vuelo 1:10 pm · llega 2:50 pm</div>
-        </div>
-      </div>
-      <a href="tickets/vuelo_milan_barcelona.pdf" target="_blank" class="ticket-btn">Ver boleto →</a>
-    </div>
-
-    <div class="ticket-row">
-      <div class="ticket-left">
-        <div class="ticket-icon">🚂</div>
-        <div class="ticket-info">
-          <div class="ticket-route">Barcelona → Pamplona</div>
-          <div class="ticket-detail">5 jul · Tren 12:50 pm · llega 5:24 pm</div>
-        </div>
-      </div>
-      <a href="tickets/tren_barcelona_pamplona.pdf" target="_blank" class="ticket-btn">Ver boleto →</a>
-    </div>
-
-    <div class="ticket-row">
-      <div class="ticket-left">
-        <div class="ticket-icon">🚂</div>
-        <div class="ticket-info">
-          <div class="ticket-route">Pamplona → Madrid</div>
-          <div class="ticket-detail">6 jul · Tren 11:59 am · llega 4:37 pm</div>
-        </div>
-      </div>
-      <a href="tickets/tren_pamplona_madrid.pdf" target="_blank" class="ticket-btn">Ver boleto →</a>
-    </div>
-
-    <div class="ticket-row">
-      <div class="ticket-left">
-        <div class="ticket-icon">✈️</div>
-        <div class="ticket-info">
-          <div class="ticket-route">Madrid → México 🇲🇽</div>
-          <div class="ticket-detail">10 jul · Vuelo 2:35 pm · vuelo de regreso</div>
-        </div>
-      </div>
-      <div style="font-size:11px;color:var(--muted);font-style:italic;">pendiente</div>
-    </div>
-
-  </div>
-
-</div>
-
-<div class="footer">Europa · Verano 2026 &nbsp;·&nbsp; Tania, Marycruz & Maria Jose 🤍</div>
-
+    <div class="footer">Europa · Verano 2026 · Tania, Marycruz &amp; Maria Jose 🤍</div>
+  </main>
 </body>
 </html>
+
