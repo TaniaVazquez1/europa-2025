@@ -1,57 +1,295 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Barcelona · Europa 2026</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barcelona · 4–5 julio</title>
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { -webkit-text-size-adjust: 100%; }
-:root {
-  --cream: #F7F3EE; --sand: #EDE6DB; --line: #DDD6CC; --muted: #8A8278;
-  --ink: #1C1C1C; --white: #FFFFFF; --terra: #C4633A; --gold: #B8892E;
-  --accent: #C4633A; --r: 10px;
-}
-body { background: var(--cream); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.5; }
-.back { display:flex; align-items:center; gap:8px; padding:12px 20px; background:#1C1C1C; color:rgba(247,243,238,.7); font-size:12px; text-decoration:none; }
-.back:hover { color:var(--gold); }
-.hero { background:#1C1C1C; color:var(--cream); padding:36px 20px 28px; position:relative; overflow:hidden; }
-.hero::after { content:'BARCELONA'; position:absolute; right:-8px; top:-16px; font-family:Georgia,serif; font-size:100px; font-weight:bold; color:rgba(255,255,255,.04); line-height:1; pointer-events:none; user-select:none; }
-.hero-label { font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:8px; }
-.hero-title { font-family:Georgia,'Times New Roman',serif; font-size:36px; font-weight:normal; line-height:1.1; margin-bottom:4px; }
-.hero-title em { color:var(--gold); font-style:italic; }
-.hero-sub { font-size:12px; color:rgba(247,243,238,.55); margin-top:6px; }
-.chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:18px; }
-.chip { font-size:11px; padding:5px 12px; border:1px solid rgba(247,243,238,.2); border-radius:99px; color:rgba(247,243,238,.8); white-space:nowrap; }
-.main { padding:24px 14px 60px; max-width:680px; margin:0 auto; }
-.coming-soon { background:var(--white); border:1px solid var(--line); border-radius:var(--r); padding:32px 20px; text-align:center; margin-bottom:16px; }
-.coming-soon-icon { font-size:40px; margin-bottom:12px; }
-.coming-soon h2 { font-family:Georgia,serif; font-size:18px; font-weight:normal; color:var(--ink); margin-bottom:8px; }
-.coming-soon p { font-size:13px; color:var(--muted); line-height:1.6; }
-.note { font-size:12px; color:#6A6258; background:var(--sand); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; padding:10px 12px; margin-top:14px; line-height:1.6; }
-.transport { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--muted); padding:10px 14px; background:var(--white); border:1px solid var(--line); border-radius:var(--r); margin-top:12px; }
-.footer { text-align:center; padding:24px; font-size:11px; color:var(--muted); }
+  :root{
+    --accent:#C24E3A;
+    --accent2:#E8A33D;
+    --paper:#F7EFE7;
+    --ink:#23201c;
+    --muted:#857c70;
+    --line:#e7ded0;
+    --card:#fffdf9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    background:var(--paper);color:var(--ink);
+    line-height:1.5;-webkit-font-smoothing:antialiased;
+    padding:0 0 64px;
+  }
+  .wrap{max-width:620px;margin:0 auto;padding:0 18px}
+
+  /* HERO */
+  .hero{
+    background:linear-gradient(135deg,var(--accent) 0%,color-mix(in srgb,var(--accent) 78%,#000) 100%);
+    color:#fff;padding:30px 18px 26px;position:relative;overflow:hidden;
+  }
+  .hero::after{content:"";position:absolute;right:-40px;top:-40px;width:180px;height:180px;
+    background:var(--accent2);opacity:.22;border-radius:50%}
+  .hero .wrap{position:relative}
+  .back{display:inline-flex;align-items:center;gap:6px;color:#fff;text-decoration:none;
+    font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:16px}
+  .back:hover{opacity:1}
+  .flag{font-size:2.4rem;line-height:1}
+  .h-name{font-size:2.5rem;font-weight:700;letter-spacing:-.01em;margin:8px 0 2px}
+  .h-meta{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.9}
+  .h-tag{font-style:italic;opacity:.95;margin-top:10px;font-size:1.02rem}
+  .h-logi{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .h-logi span{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);
+    padding:5px 11px;border-radius:999px;font-size:.74rem;letter-spacing:.02em}
+
+  /* progreso global */
+  .overall{margin:18px 0 6px;display:flex;align-items:center;gap:12px}
+  .bar{flex:1;height:9px;background:var(--line);border-radius:999px;overflow:hidden}
+  .bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));
+    border-radius:999px;transition:width .35s ease}
+  .overall b{font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums;min-width:54px;text-align:right}
+
+  /* leyenda */
+  .legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin:14px 0 8px}
+  .chip{display:inline-flex;align-items:center;gap:5px;font-size:.74rem;color:var(--muted)}
+  .chip i{width:9px;height:9px;border-radius:50%;display:inline-block}
+
+  /* DÍA (cajita) */
+  .day{background:var(--card);border:1px solid var(--line);border-radius:16px;margin:14px 0;
+    overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+  .day[open]{box-shadow:0 8px 24px -16px rgba(0,0,0,.35)}
+  .d-head{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;
+    padding:15px 16px;user-select:none}
+  .d-head::-webkit-details-marker{display:none}
+  .d-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:var(--accent);color:#fff;border-radius:10px;padding:7px 11px;min-width:64px}
+  .d-label{font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+  .d-date{font-size:.82rem;font-weight:700;white-space:nowrap}
+  .d-title{flex:1;font-size:1.12rem;font-weight:700;letter-spacing:-.01em}
+  .d-prog{display:flex;align-items:center;gap:9px;color:var(--muted)}
+  .d-prog-num{font-size:.8rem;font-variant-numeric:tabular-nums}
+  .d-chev{transition:transform .25s ease;font-size:.9rem}
+  .day[open] .d-chev{transform:rotate(180deg)}
+  .day.done .d-tab{background:#5C9A6E}
+  .day.done .d-prog-num{color:#5C9A6E;font-weight:700}
+
+  .d-body{padding:0 16px 14px}
+  .d-note{background:color-mix(in srgb,var(--accent2) 16%,#fff);border-left:3px solid var(--accent2);
+    border-radius:0 8px 8px 0;padding:9px 12px;font-size:.86rem;color:#5f5648;margin:2px 0 12px;font-style:italic}
+
+  /* ITEM con checkbox */
+  .item{display:grid;grid-template-columns:46px 26px 1fr;align-items:start;gap:10px;
+    padding:11px 8px;border-radius:10px;cursor:pointer;position:relative;
+    transition:background .15s}
+  .item:hover{background:#faf6ef}
+  .item + .item{border-top:1px solid #f0e9dc}
+  .chk{position:absolute;opacity:0;width:0;height:0}
+  .i-time{font-size:.78rem;font-weight:700;color:var(--accent);padding-top:3px;
+    font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .i-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:.82rem;background:color-mix(in srgb,var(--c) 16%,#fff);
+    border:1.5px solid var(--c);line-height:1;transition:.18s}
+  .i-body{padding-top:1px}
+  .i-name{font-weight:600;display:block;transition:.18s}
+  .i-sub{font-size:.84rem;color:var(--muted);margin-top:2px}
+
+  /* estado tachado */
+  .chk:checked ~ .i-dot{background:var(--c);color:#fff;border-color:var(--c)}
+  .chk:checked ~ .i-dot::after{content:"✓";position:absolute;font-size:.8rem}
+  .chk:checked ~ .i-dot *{display:none}
+  .chk:checked ~ .i-body .i-name{text-decoration:line-through;color:var(--muted);text-decoration-thickness:2px}
+  .chk:checked ~ .i-body .i-sub{opacity:.55}
+  .chk:focus-visible ~ .i-dot{outline:2px solid var(--accent);outline-offset:2px}
+
+  .reset{display:block;margin:24px auto 0;background:none;border:1px solid var(--line);
+    color:var(--muted);padding:8px 18px;border-radius:999px;font:inherit;font-size:.8rem;
+    cursor:pointer;transition:.15s}
+  .reset:hover{border-color:var(--accent);color:var(--accent)}
+  .foot{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px;font-style:italic}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<a class="back" href="index.html">‹ Volver al inicio</a>
-<div class="hero">
-  <div class="hero-label">Viaje · Europa 2026</div>
-  <h1 class="hero-title">🌴 <em>Barcelona</em></h1>
-  <div class="hero-sub">Hotel Allegro · Carrer del Rosselló 205</div>
-  <div class="chips">
-    <div class="chip">📅 4 – 5 julio · 1 noche</div>
-  </div>
-</div>
-<div class="main">
-  <div class="coming-soon">
-    <div class="coming-soon-icon">✍️</div>
-    <h2>Itinerario en construcción</h2>
-    <p>Las recomendaciones y el plan detallado de Barcelona se están armando. Vuelve pronto.</p>
-  </div>
-  
-  <div class="transport">🚂 Tren 12:50 pm Barcelona Sants → Pamplona · llega 5:24 pm</div>
-</div>
-<div class="footer">Europa · Verano 2026 🤍</div>
+  <header class="hero">
+    <div class="wrap">
+      <a class="back" href="index.html">← Volver al viaje</a>
+      <div class="flag">🇪🇸</div>
+      <h1 class="h-name">Barcelona</h1>
+      <div class="h-meta">España · 4–5 julio · 1 noche</div>
+      <p class="h-tag">Gaudí, Eixample y una tarde para exprimir</p>
+      <div class="h-logi">
+        <span>🏨 Allegro · Carrer del Rosselló 205 (Eixample)</span>
+        <span>🛬 Vuelo llega 2:50pm (4 jul)</span>
+        <span>🛫 Tren a Pamplona 12:50pm desde Sants (5 jul)</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="overall">
+      <div class="bar"><i id="overallBar"></i></div>
+      <b id="overallNum">0/9</b>
+    </div>
+    <div class="legend"><span class="chip"><i style="background:#D98E2B"></i>⭐ imperdible</span><span class="chip"><i style="background:#E2614C"></i>🍴 comer</span><span class="chip"><i style="background:#5C9A6E"></i>🚶 paseo</span><span class="chip"><i style="background:#8E6BB0"></i>🍸 fiesta</span><span class="chip"><i style="background:#C99A2E"></i>🏨 hotel</span><span class="chip"><i style="background:#7A8290"></i>🚆 logística</span></div>
+
+      <details class="day" data-day="0" data-count="5" open>
+        <summary class="d-head">
+          <span class="d-tab">
+            <span class="d-label">Día 1</span>
+            <span class="d-date">Sáb 4 jul</span>
+          </span>
+          <span class="d-title">Llegada y Gaudí</span>
+          <span class="d-prog"><span class="d-prog-num">0/5</span><span class="d-chev">▾</span></span>
+        </summary>
+        <div class="d-body">
+          <div class="d-note">Súper corto: una tarde y una mañana. Armado para exprimir sin estrés.</div>
+        <label class="item" style="--c:#C99A2E">
+          <input type="checkbox" class="chk" data-k="0-0">
+          <span class="i-time">14:50</span>
+          <span class="i-dot" title="hotel">🏨</span>
+          <span class="i-body">
+            <span class="i-name">Llega vuelo → hotel</span>
+            <div class="i-sub">En pleno Eixample, a 5 min de Passeig de Gràcia.</div>
+          </span>
+        </label>
+        <label class="item" style="--c:#D98E2B">
+          <input type="checkbox" class="chk" data-k="0-1">
+          <span class="i-time">16:30</span>
+          <span class="i-dot" title="imperdible">⭐</span>
+          <span class="i-body">
+            <span class="i-name">Casa Batlló</span>
+            <div class="i-sub">Reserva con hora. Pasas también por La Pedrera.</div>
+          </span>
+        </label>
+        <label class="item" style="--c:#5C9A6E">
+          <input type="checkbox" class="chk" data-k="0-2">
+          <span class="i-time">18:00</span>
+          <span class="i-dot" title="paseo">🚶</span>
+          <span class="i-body">
+            <span class="i-name">Passeig de Gràcia + tapas</span>
+            <div class="i-sub">Aperitivo en Cervecería Catalana.</div>
+          </span>
+        </label>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="0-3">
+          <span class="i-time">21:00</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body">
+            <span class="i-name">Cena: 7 Portes</span>
+            <div class="i-sub">¡Reservar! La paella deli.</div>
+          </span>
+        </label>
+        <label class="item" style="--c:#8E6BB0">
+          <input type="checkbox" class="chk" data-k="0-4">
+          <span class="i-time">23:00</span>
+          <span class="i-dot" title="fiesta">🍸</span>
+          <span class="i-body">
+            <span class="i-name">El Born o Barrio Gótico</span>
+            <div class="i-sub">Si quedan ganas.</div>
+          </span>
+        </label>
+        </div>
+      </details>
+      <details class="day" data-day="1" data-count="4">
+        <summary class="d-head">
+          <span class="d-tab">
+            <span class="d-label">Día 2</span>
+            <span class="d-date">Dom 5 jul</span>
+          </span>
+          <span class="d-title">Mañana corta y salida</span>
+          <span class="d-prog"><span class="d-prog-num">0/4</span><span class="d-chev">▾</span></span>
+        </summary>
+        <div class="d-body">
+          
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="1-0">
+          <span class="i-time">08:30</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body">
+            <span class="i-name">Desayuno</span>
+            
+          </span>
+        </label>
+        <label class="item" style="--c:#D98E2B">
+          <input type="checkbox" class="chk" data-k="1-1">
+          <span class="i-time">09:30</span>
+          <span class="i-dot" title="imperdible">⭐</span>
+          <span class="i-body">
+            <span class="i-name">Sagrada Família (si la reservas)</span>
+            <div class="i-sub">O paseo tranquilo por el Gótico.</div>
+          </span>
+        </label>
+        <label class="item" style="--c:#C99A2E">
+          <input type="checkbox" class="chk" data-k="1-2">
+          <span class="i-time">11:45</span>
+          <span class="i-dot" title="hotel">🏨</span>
+          <span class="i-body">
+            <span class="i-name">Recoger en el hotel → Barcelona Sants</span>
+            
+          </span>
+        </label>
+        <label class="item" style="--c:#7A8290">
+          <input type="checkbox" class="chk" data-k="1-3">
+          <span class="i-time">12:50</span>
+          <span class="i-dot" title="logística">🚆</span>
+          <span class="i-body">
+            <span class="i-name">Tren a Pamplona</span>
+            <div class="i-sub">Llega 5:24pm.</div>
+          </span>
+        </label>
+        </div>
+      </details>
+
+    <button class="reset" id="resetBtn">Reiniciar checks</button>
+    <p class="foot">Toca cada actividad para tacharla · se guarda en tu teléfono</p>
+  </main>
+
+<script>
+(function(){
+  var KEY = "itin-barcelona";
+  var store = {};
+  try { store = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e) { store = {}; }
+
+  var checks = document.querySelectorAll(".chk");
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(store)); } catch(e){} }
+
+  function refreshDay(day){
+    var total = +day.dataset.count;
+    var done = day.querySelectorAll(".chk:checked").length;
+    day.querySelector(".d-prog-num").textContent = done + "/" + total;
+    day.classList.toggle("done", done === total && total > 0);
+  }
+  function refreshOverall(){
+    var done = document.querySelectorAll(".chk:checked").length;
+    var total = checks.length;
+    document.getElementById("overallNum").textContent = done + "/" + total;
+    document.getElementById("overallBar").style.width = (total? (done/total*100):0) + "%";
+  }
+
+  checks.forEach(function(chk){
+    var k = chk.dataset.k;
+    if (store[k]) chk.checked = true;
+    chk.addEventListener("change", function(){
+      if (chk.checked) store[k] = 1; else delete store[k];
+      save();
+      refreshDay(chk.closest(".day"));
+      refreshOverall();
+    });
+  });
+
+  document.querySelectorAll(".day").forEach(refreshDay);
+  refreshOverall();
+
+  document.getElementById("resetBtn").addEventListener("click", function(){
+    if(!confirm("¿Borrar todos los checks de Barcelona?")) return;
+    store = {}; save();
+    checks.forEach(function(c){ c.checked = false; });
+    document.querySelectorAll(".day").forEach(refreshDay);
+    refreshOverall();
+  });
+})();
+</script>
 </body>
+</html>
 </html>
