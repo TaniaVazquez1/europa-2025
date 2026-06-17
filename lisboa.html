@@ -1,535 +1,296 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lisboa · 23–25 Junio 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lisboa · 23–25 jun</title>
 <style>
-  :root {
-    --cream: #F7F3ED;
-    --ink: #1A1612;
-    --terracotta: #C4622D;
-    --terracotta-light: #F2E4DA;
-    --teal: #2A6B65;
-    --teal-light: #DDF0EE;
-    --gold: #B8882A;
-    --gold-light: #FAF0DC;
-    --mauve: #7A4F6D;
-    --mauve-light: #F0E6ED;
-    --slate: #4A5568;
-    --border: #E2D9CE;
-    --pink-accent: #E8D5CE;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--ink);
-    font-size: 14px;
-    line-height: 1.6;
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 40px 24px;
-  }
-  .header {
-    text-align: center;
-    margin-bottom: 40px;
-    padding-bottom: 32px;
-    border-bottom: 1px solid var(--border);
-  }
-  .header-eyebrow {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--terracotta);
-    margin-bottom: 10px;
-  }
-  .header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 42px;
-    font-weight: 400;
-    color: var(--ink);
-    line-height: 1.1;
-    margin-bottom: 8px;
-  }
-  .header h1 em {
-    font-style: italic;
-    color: var(--terracotta);
-  }
-  .header-dates {
-    font-size: 13px;
-    color: var(--slate);
-    font-weight: 300;
-  }
-  .alert-box {
-    background: var(--gold-light);
-    border: 1px solid #D4A84B;
-    border-radius: 10px;
-    padding: 12px 16px;
-    font-size: 12px;
-    color: #7A5A10;
-    margin-bottom: 32px;
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  .alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
-  .day-section { margin-bottom: 36px; }
-  .day-header-row {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-  .day-number {
-    font-family: 'Playfair Display', serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--terracotta);
-    white-space: nowrap;
-  }
-  .day-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 400;
-    color: var(--ink);
-  }
-  .day-subtitle {
-    font-size: 11px;
-    color: var(--slate);
-    font-weight: 300;
-    margin-top: 2px;
-    padding-left: 1px;
-    margin-bottom: 12px;
-  }
-  .day-divider {
-    height: 1px;
-    background: var(--border);
-    flex: 1;
-  }
-  .timeline { position: relative; padding-left: 84px; }
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 60px;
-    top: 8px;
-    bottom: 8px;
-    width: 1px;
-    background: var(--border);
-  }
-  .entry {
-    position: relative;
-    margin-bottom: 10px;
-  }
-  .entry::before {
-    content: '';
-    position: absolute;
-    left: -26px;
-    top: 10px;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--border);
-    border: 1.5px solid var(--slate);
-  }
-  .entry.highlight::before { background: var(--terracotta); border-color: var(--terracotta); }
-  .entry.shopping::before { background: var(--mauve); border-color: var(--mauve); }
-  .time-label {
-    position: absolute;
-    left: -80px;
-    top: 7px;
-    font-size: 10px;
-    font-weight: 500;
-    color: var(--slate);
-    text-align: right;
-    width: 58px;
-    line-height: 1.3;
-  }
-  .entry-card {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 14px;
-  }
-  .entry-card.is-highlight {
-    border-color: var(--terracotta);
-    background: var(--terracotta-light);
-  }
-  .entry-card.is-shopping {
-    border-color: #C9A8C0;
-    background: var(--mauve-light);
-  }
-  .entry-title {
-    font-weight: 500;
-    font-size: 13px;
-    color: var(--ink);
-    margin-bottom: 3px;
-  }
-  .entry-note {
-    font-size: 12px;
-    color: var(--slate);
-    font-weight: 300;
-    line-height: 1.55;
-  }
-  .tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 5px; }
-  .tag {
-    font-size: 10px;
-    font-weight: 500;
-    padding: 1px 8px;
-    border-radius: 20px;
-    letter-spacing: 0.02em;
-  }
-  .t-food { background: #FAECE7; color: #993C1D; }
-  .t-walk { background: var(--teal-light); color: var(--teal); }
-  .t-bar  { background: #EEEDFE; color: #3C3489; }
-  .t-view { background: var(--gold-light); color: var(--gold); }
-  .t-hist { background: #E6F1FB; color: #185FA5; }
-  .t-shop { background: var(--mauve-light); color: var(--mauve); }
-  .t-tip  { background: #EAF3DE; color: #3B6D11; }
-  .t-ferry{ background: #E6F1FB; color: #0C447C; }
-  .t-opt  { background: #F1EFE8; color: #5F5E5A; }
-  .extras-section {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 16px 20px;
-    margin-top: 8px;
-  }
-  .extras-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--ink);
-    margin-bottom: 12px;
-  }
-  .extras-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 8px;
-  }
-  .extra-item {
-    background: var(--cream);
-    border: 1px solid var(--border);
-    border-radius: 7px;
-    padding: 8px 10px;
-    font-size: 11px;
-    color: var(--slate);
-    line-height: 1.5;
-  }
-  .extra-item strong { color: var(--ink); font-size: 12px; display: block; margin-bottom: 2px; }
-  .section-divider {
-    height: 1px;
-    background: var(--border);
-    margin: 32px 0;
-  }
-  .urgente {
-    background: #FFF3CD;
-    border: 1px solid #D4A84B;
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 12px;
-    color: #7A5A10;
-    margin-top: 6px;
-  }
-  .urgente strong { color: var(--terracotta); }
+  :root{--accent:#2A8C82;--accent2:#E0A33D;--paper:#EEF4F2;
+    --ink:#23201c;--muted:#857c70;--line:#e7ded0;--card:#fffdf9;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    background:var(--paper);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;padding:0 0 64px}
+  .wrap{max-width:620px;margin:0 auto;padding:0 18px}
+  .hero{background:linear-gradient(135deg,var(--accent) 0%,color-mix(in srgb,var(--accent) 78%,#000) 100%);
+    color:#fff;padding:30px 18px 26px;position:relative;overflow:hidden}
+  .hero::after{content:"";position:absolute;right:-40px;top:-40px;width:180px;height:180px;
+    background:var(--accent2);opacity:.22;border-radius:50%}
+  .hero .wrap{position:relative}
+  .back{display:inline-flex;align-items:center;gap:6px;color:#fff;text-decoration:none;
+    font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:16px}
+  .back:hover{opacity:1}
+  .flag{font-size:2.4rem;line-height:1}
+  .h-name{font-size:2.5rem;font-weight:700;letter-spacing:-.01em;margin:8px 0 2px}
+  .h-meta{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.9}
+  .h-tag{font-style:italic;opacity:.95;margin-top:10px;font-size:1.02rem}
+  .h-logi{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .h-logi span{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);
+    padding:5px 11px;border-radius:999px;font-size:.74rem}
+  .overall{margin:18px 0 6px;display:flex;align-items:center;gap:12px}
+  .bar{flex:1;height:9px;background:var(--line);border-radius:999px;overflow:hidden}
+  .bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));
+    border-radius:999px;transition:width .35s ease}
+  .overall b{font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums;min-width:54px;text-align:right}
+  .legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin:14px 0 8px}
+  .chip{display:inline-flex;align-items:center;gap:5px;font-size:.74rem;color:var(--muted)}
+  .chip i{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .alert{background:#FFF3CD;border:1px solid #D4A84B;border-left:4px solid #D4A84B;border-radius:10px;
+    padding:12px 14px;font-size:.86rem;color:#7A5A10;margin:14px 0 4px;line-height:1.5}
+  .alert b{color:var(--accent)}
+  .day{background:var(--card);border:1px solid var(--line);border-radius:16px;margin:14px 0;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+  .day[open]{box-shadow:0 8px 24px -16px rgba(0,0,0,.35)}
+  .d-head{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:15px 16px;user-select:none}
+  .d-head::-webkit-details-marker{display:none}
+  .d-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:var(--accent);color:#fff;border-radius:10px;padding:7px 11px;min-width:64px}
+  .d-label{font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+  .d-date{font-size:.82rem;font-weight:700;white-space:nowrap}
+  .d-title{flex:1;font-size:1.08rem;font-weight:700;letter-spacing:-.01em}
+  .d-prog{display:flex;align-items:center;gap:9px;color:var(--muted)}
+  .d-prog-num{font-size:.8rem;font-variant-numeric:tabular-nums}
+  .d-chev{transition:transform .25s ease;font-size:.9rem}
+  .day[open] .d-chev{transform:rotate(180deg)}
+  .day.done .d-tab{background:#5C9A6E}
+  .day.done .d-prog-num{color:#5C9A6E;font-weight:700}
+  .d-body{padding:0 16px 14px}
+  .d-note{background:color-mix(in srgb,var(--accent2) 16%,#fff);border-left:3px solid var(--accent2);
+    border-radius:0 8px 8px 0;padding:9px 12px;font-size:.86rem;color:#5f5648;margin:2px 0 12px;font-style:italic}
+  .item{display:grid;grid-template-columns:46px 26px 1fr;align-items:start;gap:10px;
+    padding:11px 8px;border-radius:10px;cursor:pointer;position:relative;transition:background .15s}
+  .item:hover{background:#faf6ef}
+  .item + .item{border-top:1px solid #f0e9dc}
+  .chk{position:absolute;opacity:0;width:0;height:0}
+  .i-time{font-size:.76rem;font-weight:700;color:var(--accent);padding-top:3px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .i-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:.82rem;background:color-mix(in srgb,var(--c) 16%,#fff);border:1.5px solid var(--c);line-height:1;transition:.18s}
+  .i-body{padding-top:1px}
+  .i-name{font-weight:600;display:block;transition:.18s}
+  .i-sub{font-size:.84rem;color:var(--muted);margin-top:2px}
+  .chk:checked ~ .i-dot{background:var(--c);color:#fff;border-color:var(--c)}
+  .chk:checked ~ .i-dot::after{content:"✓";position:absolute;font-size:.8rem}
+  .chk:checked ~ .i-dot *{display:none}
+  .chk:checked ~ .i-body .i-name{text-decoration:line-through;color:var(--muted);text-decoration-thickness:2px}
+  .chk:checked ~ .i-body .i-sub{opacity:.55}
+  .chk:checked ~ .i-body .i-tags{opacity:.5}
+  .chk:focus-visible ~ .i-dot{outline:2px solid var(--accent);outline-offset:2px}
+  .i-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+  .tag{font-size:.66rem;font-weight:700;padding:2px 8px;border-radius:999px;letter-spacing:.02em;background:#f0e9dc;color:var(--muted)}
+  .tag.book{background:color-mix(in srgb,var(--accent2) 22%,#fff);color:#7a5c10}
+  .reset{display:block;margin:24px auto 0;background:none;border:1px solid var(--line);color:var(--muted);
+    padding:8px 18px;border-radius:999px;font:inherit;font-size:.8rem;cursor:pointer;transition:.15s}
+  .reset:hover{border-color:var(--accent);color:var(--accent)}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:16px 0}
+  .block h3{font-size:1rem;margin-bottom:6px;color:var(--accent)}
+  .block .sublabel{font-size:.78rem;color:var(--muted);font-style:italic;margin-bottom:12px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px}
+  .gcard{background:color-mix(in srgb,var(--accent) 5%,#fff);border:1px solid var(--line);border-radius:12px;padding:12px}
+  .gcard b{display:block;font-size:.84rem;margin-bottom:3px}
+  .gcard span{font-size:.78rem;color:var(--muted);line-height:1.4}
+  .foot{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px;font-style:italic}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
+  <header class="hero"><div class="wrap">
+    <a class="back" href="index.html">← Volver al viaje</a>
+    <div class="flag">🌊</div>
+    <h1 class="h-name">Lisboa</h1>
+    <div class="h-meta">Portugal · 23–25 junio · 2 noches</div>
+    <p class="h-tag">Alfama, Belém, Ponto Final al atardecer y noche en Bairro Alto</p>
+    <div class="h-logi"><span>🏨 Lift Apartments by RIDAN · Rua do Carmo 90</span><span>🚌 Bus llega 12:45pm (23 jun)</span><span>✈️ Vuelo 8:45am (25 jun)</span></div>
+  </div></header>
+  <main class="wrap">
+    <div class="overall"><div class="bar"><i id="overallBar"></i></div><b id="overallNum">0/22</b></div>
+    <div class="legend"><span class="chip"><i style="background:#2A8C82"></i>⭐ imperdible</span><span class="chip"><i style="background:#3E7CB1"></i>👁 ver</span><span class="chip"><i style="background:#E2614C"></i>🍴 comer</span><span class="chip"><i style="background:#5C9A6E"></i>🚶 paseo</span><span class="chip"><i style="background:#C96B9E"></i>🛍 tiendas</span><span class="chip"><i style="background:#8E6BB0"></i>🍸 fiesta</span><span class="chip"><i style="background:#C99A2E"></i>🏨 hotel</span><span class="chip"><i style="background:#7A8290"></i>🚆 logística</span></div>
+    <div class="alert">⚠ <b>Reservas pendientes:</b> Ponto Final (lun 23, 7pm) → pontofinalrest@gmail.com con fecha y nº de personas, lo antes posible · Oyster &amp; Margaritas para el martes 24 · Vuelo de regreso mié 25 8:45am → aeropuerto 6:15am máx.</div>
 
-<a href="index.html" style="display:flex;align-items:center;gap:8px;padding:12px 20px;background:#1C1C1C;color:rgba(247,243,238,.7);font-size:12px;text-decoration:none;font-family:-apple-system,sans-serif;margin:-40px -24px 32px;">‹ Volver al inicio</a>
+      <details class="day" data-day="0" data-count="9" open>
+        <summary class="d-head">
+          <span class="d-tab"><span class="d-label">Día 1</span><span class="d-date">Lun 23 jun</span></span>
+          <span class="d-title">Llegada · Alfama · Ponto Final</span>
+          <span class="d-prog"><span class="d-prog-num">0/9</span><span class="d-chev">▾</span></span>
+        </summary>
+        <div class="d-body">
+<div class="d-note">Check-in oficial desde las 4pm — dejar maletas en recepción y salir ya.</div>
+        <label class="item" style="--c:#C99A2E">
+          <input type="checkbox" class="chk" data-k="0-0">
+          <span class="i-time">12:45</span>
+          <span class="i-dot" title="hotel">🏨</span>
+          <span class="i-body"><span class="i-name">Llegada + check-in</span><span class="i-sub">Hotel en calle peatonal, 5 min del Rossio.</span></span>
+        </label>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="0-1">
+          <span class="i-time">13:15</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Almuerzo: Faz Frio</span><span class="i-sub">Comida portuguesa tradicional en Bairro Alto. El primer almuerzo auténtico.</span></span>
+        </label>
+        <label class="item" style="--c:#C96B9E">
+          <input type="checkbox" class="chk" data-k="0-2">
+          <span class="i-time">14:30</span>
+          <span class="i-dot" title="tiendas">🛍</span>
+          <span class="i-body"><span class="i-name">Shopping ronda 1 — Chiado</span><span class="i-sub">Rua do Carmo y Garrett: Zula (joyería), Nossa Concept Store, Porta Azul (azulejos), Clementina.</span><span class="i-tags"><span class="tag">si hay energía</span></span></span>
+        </label>
+        <label class="item" style="--c:#3E7CB1">
+          <input type="checkbox" class="chk" data-k="0-3">
+          <span class="i-time">15:15</span>
+          <span class="i-dot" title="ver">👁</span>
+          <span class="i-body"><span class="i-name">Tram 28 hacia Alfama</span><span class="i-sub">Subir en Martim Moniz. La experiencia más clásica de Lisboa.</span></span>
+        </label>
+        <label class="item" style="--c:#2A8C82">
+          <input type="checkbox" class="chk" data-k="0-4">
+          <span class="i-time">16:00</span>
+          <span class="i-dot" title="imperdible">⭐</span>
+          <span class="i-body"><span class="i-name">Alfama + Castelo de São Jorge</span><span class="i-sub">El Castelo da las mejores vistas panorámicas. A 15 min a pie del hotel.</span></span>
+        </label>
+        <label class="item" style="--c:#3E7CB1">
+          <input type="checkbox" class="chk" data-k="0-5">
+          <span class="i-time">17:30</span>
+          <span class="i-dot" title="ver">👁</span>
+          <span class="i-body"><span class="i-name">Miradouro Santa Luzia + Senhora do Monte</span><span class="i-sub">Santa Luzia: vistas a Alfama y el Tajo. Senhora do Monte: el más local.</span></span>
+        </label>
+        <label class="item" style="--c:#2A8C82">
+          <input type="checkbox" class="chk" data-k="0-6">
+          <span class="i-time">18:45</span>
+          <span class="i-dot" title="imperdible">⭐</span>
+          <span class="i-body"><span class="i-name">Ferry a Cacilhas → Ponto Final</span><span class="i-sub">Cais do Sodré → Cacilhas, 10 min, ~€1.25. Llegar antes de las 7pm para el sunset.</span></span>
+        </label>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="0-7">
+          <span class="i-time">19:00</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Cena: Ponto Final</span><span class="i-sub">Rape con arroz, mariscos, bacalhau. Vista al Tajo y el Puente 25 de Abril — el momento más memorable.</span><span class="i-tags"><span class="tag book">🎫 reservar: pontofinalrest@gmail.com</span></span></span>
+        </label>
+        <label class="item" style="--c:#8E6BB0">
+          <input type="checkbox" class="chk" data-k="0-8">
+          <span class="i-time">21:30</span>
+          <span class="i-dot" title="fiesta">🍸</span>
+          <span class="i-body"><span class="i-name">Ferry de regreso + Tower Bar</span><span class="i-sub">Copa con vistas para cerrar el primer día — muy cerca del hotel.</span></span>
+        </label>
+        </div>
+      </details>
+      <details class="day" data-day="1" data-count="11">
+        <summary class="d-head">
+          <span class="d-tab"><span class="d-label">Día 2</span><span class="d-date">Mar 24 jun</span></span>
+          <span class="d-title">El día grande: tour · Belém · Bairro Alto</span>
+          <span class="d-prog"><span class="d-prog-num">0/11</span><span class="d-chev">▾</span></span>
+        </summary>
+        <div class="d-body">
+<div class="d-note">Maletas listas esta noche — el check-out del miércoles es al amanecer.</div>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="1-0">
+          <span class="i-time">08:30</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Desayuno: Heim o Dear Breakfast</span><span class="i-sub">Heim es el más cercano. Dear Breakfast más sustancioso antes del tour de 3h.</span></span>
+        </label>
+        <label class="item" style="--c:#3E7CB1">
+          <input type="checkbox" class="chk" data-k="1-1">
+          <span class="i-time">10:00</span>
+          <span class="i-dot" title="ver">👁</span>
+          <span class="i-body"><span class="i-name">Miradouro São Pedro de Alcântara</span><span class="i-sub">En la ruta al tour. Vista sobre la Baixa, sin desvío.</span></span>
+        </label>
+        <label class="item" style="--c:#2A8C82">
+          <input type="checkbox" class="chk" data-k="1-2">
+          <span class="i-time">10:30</span>
+          <span class="i-dot" title="imperdible">⭐</span>
+          <span class="i-body"><span class="i-name">Free Tour GuruWalk</span><span class="i-sub">Punto: Plaza Luís de Camões. 16 paradas con degustaciones. Termina ~13:30. Reservar en guruwalk.com.</span><span class="i-tags"><span class="tag">3h · español</span></span></span>
+        </label>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="1-3">
+          <span class="i-time">13:30</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Almuerzo: Augusto o A Marisqueira do Lis</span><span class="i-sub">Augusto = cocina portuguesa. A Marisqueira = mariscos. Ambas en Baixa, a pie.</span></span>
+        </label>
+        <label class="item" style="--c:#C96B9E">
+          <input type="checkbox" class="chk" data-k="1-4">
+          <span class="i-time">14:30</span>
+          <span class="i-dot" title="tiendas">🛍</span>
+          <span class="i-body"><span class="i-name">Shopping ronda 2 — Baixa</span><span class="i-sub">Loja das Conservas (tin fish, imperdible), The Fantastic World of Portuguese Sardines, Brandy Melville.</span><span class="i-tags"><span class="tag">si hay tiempo</span></span></span>
+        </label>
+        <label class="item" style="--c:#2A8C82">
+          <input type="checkbox" class="chk" data-k="1-5">
+          <span class="i-time">15:30</span>
+          <span class="i-dot" title="imperdible">⭐</span>
+          <span class="i-body"><span class="i-name">Belém: Jerónimos + Padrão + Torre</span><span class="i-sub">Uber o bus 728 (~20 min). Dedicar 2h. Comprar entradas online para evitar fila.</span></span>
+        </label>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="1-6">
+          <span class="i-time">17:45</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Pastéis de Belém</span><span class="i-sub">La receta original desde 1837. Comerlos ahí con azúcar y canela.</span></span>
+        </label>
+        <label class="item" style="--c:#5C9A6E">
+          <input type="checkbox" class="chk" data-k="1-7">
+          <span class="i-time">18:30</span>
+          <span class="i-dot" title="paseo">🚶</span>
+          <span class="i-body"><span class="i-name">Sunset: Ribeira das Naus</span><span class="i-sub">Al nivel del agua, con el Puente 25 de Abril de fondo.</span></span>
+        </label>
+        <label class="item" style="--c:#8E6BB0">
+          <input type="checkbox" class="chk" data-k="1-8">
+          <span class="i-time">19:30</span>
+          <span class="i-dot" title="fiesta">🍸</span>
+          <span class="i-body"><span class="i-name">Aperitivo: Calma — vino y tapas</span><span class="i-sub">Chiado, a pie del hotel. Cargar energía con vino portugués.</span></span>
+        </label>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="1-9">
+          <span class="i-time">21:00</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Cena: Oyster &amp; Margaritas o Taverna das Marias</span><span class="i-sub">Oyster &amp; Margaritas si reservaron. Taverna das Marias = platos chicos, más local.</span><span class="i-tags"><span class="tag book">🎫 reservar Oyster</span></span></span>
+        </label>
+        <label class="item" style="--c:#8E6BB0">
+          <input type="checkbox" class="chk" data-k="1-10">
+          <span class="i-time">23:00</span>
+          <span class="i-dot" title="fiesta">🍸</span>
+          <span class="i-body"><span class="i-name">Noche: Pensão Amor → Vago → Bairro Alto → Lux Frágil</span><span class="i-sub">Pensão Amor para arrancar. Vago es el MUST. Lux Frágil tras la 1am — el mejor antro de Lisboa.</span></span>
+        </label>
+        </div>
+      </details>
+      <details class="day" data-day="2" data-count="2">
+        <summary class="d-head">
+          <span class="d-tab"><span class="d-label">Día 3</span><span class="d-date">Mié 25 jun</span></span>
+          <span class="d-title">Salida — vuelo 8:45am</span>
+          <span class="d-prog"><span class="d-prog-num">0/2</span><span class="d-chev">▾</span></span>
+        </summary>
+        <div class="d-body">
+<div class="d-note">Aeropuerto a las 6:15am máximo. Llegar 2h antes del vuelo.</div>
+        <label class="item" style="--c:#C99A2E">
+          <input type="checkbox" class="chk" data-k="2-0">
+          <span class="i-time">Noche</span>
+          <span class="i-dot" title="hotel">🏨</span>
+          <span class="i-body"><span class="i-name">Maletas listas la noche anterior</span><span class="i-sub">Empacar todo el martes. Check-out express al amanecer.</span></span>
+        </label>
+        <label class="item" style="--c:#7A8290">
+          <input type="checkbox" class="chk" data-k="2-1">
+          <span class="i-time">06:15</span>
+          <span class="i-dot" title="logística">🚆</span>
+          <span class="i-body"><span class="i-name">Aeropuerto — Uber o Metro Linha Vermelha</span><span class="i-sub">~20 min desde el hotel. Metro desde Rossio con un transbordo.</span></span>
+        </label>
+        </div>
+      </details>
+    <button class="reset" id="resetBtn">Reiniciar checks</button>
 
-<div class="header">
-  <div class="header-eyebrow">Itinerario de viaje</div>
-  <h1>Lisboa <em>junio</em> 2026</h1>
-  <div class="header-dates">23 – 25 junio · Hotel: Lift Apartments by RIDAN Hotels, Rua do Carmo 90</div>
-</div>
+    <div class="block"><h3>✨ Si sobra tiempo</h3><div class="sublabel">Sin forzar — solo si el plan lo permite</div><div class="grid"><div class="gcard"><b>Carmo Convent</b><span>Al lado del hotel — entrar si hay hueco el lunes o martes post-tour.</span></div><div class="gcard"><b>Time Out Market</b><span>En Cais do Sodré — curiosear al pasar hacia el ferry del lunes.</span></div><div class="gcard"><b>Seagull Method / Casa Casa</b><span>Cafés para el lunes si llegan con tiempo antes de Alfama.</span></div><div class="gcard"><b>LX Factory</b><span>Lunes tarde si el shopping termina pronto. Nave industrial con diseño.</span></div><div class="gcard"><b>Playa Carcavelos</b><span>Solo si Belém termina antes de las 17h. Tren desde Cais do Sodré.</span></div><div class="gcard"><b>Fares / Capítulo / Lupita</b><span>Alternativas de cena si los primeros planes fallan.</span></div></div></div>
+    <div class="block"><h3>📒 Lista completa de recomendaciones</h3><div class="grid"><div class="gcard"><b>Desayunos</b><span>Magnolia&#x27;s · Dear Breakfast · Heim · Seagull Method · Casa Casa</span></div><div class="gcard"><b>Almuerzo / Comida</b><span>Augusto · Faz Frio · Capítulo · Fares · A Marisqueira do Lis</span></div><div class="gcard"><b>Cena especial</b><span>Ponto Final ⭐ · Oyster &amp; Margaritas · Parreirinha de Alfama</span></div><div class="gcard"><b>Vinos / tapas</b><span>Calma · Taverna das Marias · Praia no Parque</span></div><div class="gcard"><b>Quick bites</b><span>Bifanas do Afonso · Trevo · Nat&#x27;elier · Pastéis de Belém · Time Out Market</span></div><div class="gcard"><b>Pizza / otros</b><span>Lupita (pizza) · Fares (mediterránea)</span></div><div class="gcard"><b>Bares noche</b><span>Tower Bar ⭐ · Vago ⭐ · Pensão Amor · Bazz · Praia no Parque · Incognito · Lux Frágil</span></div><div class="gcard"><b>Shopping</b><span>Nossa · Zula · Brandy Melville · Porta Azul · Loja das Conservas · Clementina · Sardinas · LX Factory</span></div></div></div>
 
-<div class="alert-box">
-  <span class="alert-icon">⚠</span>
-  <div>
-    <strong>Reservas pendientes:</strong> Ponto Final — lunes 23, 7pm → <strong>pontofinalrest@gmail.com</strong> (fecha + número de personas). Hacerlo con la mayor anticipación posible. Oyster & Margaritas para el martes 24 noche.
-    <br>Vuelo de regreso: miércoles 25 a las 8:45am — aeropuerto a las 6:15am máximo.
-  </div>
-</div>
-
-<!-- ═══════════════ DIA 1 ═══════════════ -->
-<div class="day-section">
-  <div class="day-header-row">
-    <span class="day-number">Día 1</span>
-    <span class="day-title">Lunes 23 junio</span>
-    <div class="day-divider"></div>
-  </div>
-  <div class="day-subtitle">Autobús llega 12:45pm · Check-in · Faz Frio · Shopping Chiado · Alfama · Ponto Final</div>
-
-  <div class="timeline">
-
-    <div class="entry">
-      <div class="time-label">12:45</div>
-      <div class="entry-card">
-        <div class="tags"><span class="tag t-tip">Tip</span></div>
-        <div class="entry-title">Llegada + check-in</div>
-        <div class="entry-note">Check-in oficial desde las 4pm — dejar maletas en recepción y salir ya. El hotel está en calle peatonal, 5 min del Rossio.</div>
-      </div>
-    </div>
-
-    <div class="entry">
-      <div class="time-label">13:15</div>
-      <div class="entry-card is-highlight">
-        <div class="tags"><span class="tag t-food">Almuerzo</span></div>
-        <div class="entry-title">Almuerzo: Faz Frio</div>
-        <div class="entry-note">Comida portuguesa tradicional, cerca del hotel en Bairro Alto. El primer almuerzo auténtico del viaje — cocina de toda la vida.</div>
-      </div>
-    </div>
-
-    <div class="entry shopping">
-      <div class="time-label">14:30</div>
-      <div class="entry-card is-shopping">
-        <div class="tags"><span class="tag t-shop">Shopping</span><span class="tag t-opt">Si hay energía</span></div>
-        <div class="entry-title">🛍 Shopping ronda 1 — Chiado a pie desde el hotel</div>
-        <div class="entry-note">Rua do Carmo y Rua Garrett enfrente del hotel. <strong>Zula</strong> (joyería), <strong>Nossa Concept Store</strong> (mucho de todo), <strong>Porta Azul</strong> (souvenirs y azulejos), <strong>Clementina</strong> (souvenirs y joyería). Dejar bolsas en el hotel antes de salir a Alfama.</div>
-      </div>
-    </div>
-
-    <div class="entry">
-      <div class="time-label">15:15</div>
-      <div class="entry-card">
-        <div class="tags"><span class="tag t-walk">Icónico</span></div>
-        <div class="entry-title">Tram 28 hacia Alfama</div>
-        <div class="entry-note">Subir en Martim Moniz. La experiencia más clásica de Lisboa — apretado, auténtico, fotogénico. El free tour ya cubre Baixa/Chiado, hoy el tram lleva directo a Alfama.</div>
-      </div>
-    </div>
-
-    <div class="entry">
-      <div class="time-label">16:00</div>
-      <div class="entry-card">
-        <div class="tags"><span class="tag t-hist">Historia</span></div>
-        <div class="entry-title">Alfama + Castelo de São Jorge</div>
-        <div class="entry-note">El free tour toca Alfama por encima — hoy se explora con calma. El Castelo da las mejores vistas panorámicas de toda la ciudad. A 15 min a pie del hotel.</div>
-      </div>
-    </div>
-
-    <div class="entry">
-      <div class="time-label">17:30</div>
-      <div class="entry-card">
-        <div class="tags"><span class="tag t-view">Atardecer</span></div>
-        <div class="entry-title">Miradouro de Santa Luzia + Senhora do Monte</div>
-        <div class="entry-note">Santa Luzia: vistas a Alfama y el Tajo. Senhora do Monte: el más local y menos turístico de todos — subir si hay piernas.</div>
-      </div>
-    </div>
-
-    <div class="entry highlight">
-      <div class="time-label">18:45</div>
-      <div class="entry-card is-highlight">
-        <div class="tags"><span class="tag t-ferry">Ferry</span><span class="tag t-view">Vista</span></div>
-        <div class="entry-title">Ferry a Cacilhas → Ponto Final ⭐</div>
-        <div class="entry-note">Cais do Sodré → Cacilhas, 10 min, ~€1.25. Llegar antes de las 7pm para el sunset sin obstáculos frente al Puente 25 de Abril. Caminar ~12 min desde el ferry por el paseo.</div>
-      </div>
-    </div>
-
-    <div class="entry highlight">
-      <div class="time-label">19:00</div>
-      <div class="entry-card is-highlight">
-        <div class="tags"><span class="tag t-food">Cena especial</span></div>
-        <div class="entry-title">Cena: Ponto Final</div>
-        <div class="entry-note">Rape con arroz, mariscos, bacalhau fritters. Vista al Tajo con el Puente 25 de Abril de fondo al atardecer — el momento más memorable del viaje. <strong>Reservar ya:</strong> pontofinalrest@gmail.com</div>
-      </div>
-    </div>
-
-    <div class="entry">
-      <div class="time-label">21:30</div>
-      <div class="entry-card">
-        <div class="tags"><span class="tag t-bar">Bar · MUST</span></div>
-        <div class="entry-title">Ferry de regreso + Tower Bar</div>
-        <div class="entry-note">Ferry a Cais do Sodré y directo al Tower Bar. Copa con vistas para cerrar el primer día — muy cerca del hotel.</div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<div class="section-divider"></div>
-
-<!-- ═══════════════ DIA 2 ═══════════════ -->
-<div class="day-section">
-  <div class="day-header-row">
-    <span class="day-number">Día 2</span>
-    <span class="day-title">Martes 24 junio — El día grande</span>
-    <div class="day-divider"></div>
-  </div>
-  <div class="day-subtitle">Free tour de mañana · Shopping ronda 2 · Belém · Noche larga en Bairro Alto</div>
-
-  <div class="timeline">
-
-    <div class="entry">
-      <div class="time-label">8:30</div>
-      <div class="entry-card">
-        <div class="tags"><span class="tag t-food">Desayuno</span></div>
-        <div class="entry-title">Desayuno: Heim o Dear Breakfast</div>
-        <div class="entry-note">Heim es el más cercano al hotel. Dear Breakfast como alternativa más sustanciosa antes del tour de 3h.</div>
-      </div>
-    </div>
-
-    <div class="entry">
-      <div class="time-label">10:00</div>
-      <div class="entry-card">
-        <div class="tags"><span class="tag t-view">Vista</span><span class="tag t-opt">5 min extra</span></div>
-        <div class="entry-title">Miradouro São Pedro de Alcântara — de camino</div>
-        <div class="entry-note">Exactamente en la ruta al punto de encuentro del tour. Vista sobre la Baixa perfecta para la mañana, sin desvío.</div>
-      </div>
-    </div>
-
-    <div class="entry highlight">
-      <div class="time-label">10:30</div>
-      <div class="entry-card is-highlight">
-        <div class="tags"><span class="tag t-walk">Tour · 3h · Español</span></div>
-        <div class="entry-title">Free Tour GuruWalk ⭐</div>
-        <div class="entry-note">Punto de encuentro: Plaza Luís de Camões (5 min del hotel). 16 paradas: Bairro Alto, Chiado, Baixa, Arco Augusta, Praça do Comércio, Alfama. Con degustaciones incluidas. Termina ~13:30. Reservar en guruwalk.com — sesión en español, rating 4.94.</div>
-      </div>
-    </div>
-
-    <div class="entry">
-      <div class="time-label">13:30</div>
-      <div class="entry-card">
-        <div class="tags"><span class="tag t-food">Almuerzo</span></div>
-        <div class="entry-title">Almuerzo: Augusto o A Marisqueira do Lis</div>
-        <div class="entry-note">Augusto para cocina portuguesa de lunch. A Marisqueira do Lis si el tour despertó antojo de mariscos — el deli de la lista. Ambas zona Baixa, a pie.</div>
-      </div>
-    </div>
-
-    <div class="entry shopping">
-      <div class="time-label">14:30</div>
-      <div class="entry-card is-shopping">
-        <div class="tags"><span class="tag t-shop">Shopping</span><span class="tag t-opt">Si hay tiempo</span></div>
-        <div class="entry-title">🛍 Shopping ronda 2 — Baixa post-tour</div>
-        <div class="entry-note">El tour termina justo en esta zona. <strong>Loja das Conservas</strong> (tin fish, imperdible), <strong>The Fantastic World of Portuguese Sardines</strong> (souvenirs únicos), <strong>Brandy Melville</strong> si están en la zona. Dejar bolsas en el hotel antes de ir a Belém.</div>
-      </div>
-    </div>
-
-    <div class="entry highlight">
-      <div class="time-label">15:30</div>
-      <div class="entry-card is-highlight">
-        <div class="tags"><span class="tag t-hist">Historia</span></div>
-        <div class="entry-title">Belém: Mosteiro dos Jerónimos + Padrão + Torre ⭐</div>
-        <div class="entry-note">Uber o bus 728 desde Praça do Comércio (~20 min). Solo Belém queda fuera del free tour. Dedicar 2h con calma. Comprar entradas online con anticipación para evitar fila.</div>
-      </div>
-    </div>
-
-    <div class="entry">
-      <div class="time-label">17:45</div>
-      <div class="entry-card">
-        <div class="tags"><span class="tag t-food">Quick bite · Obligatorio</span></div>
-        <div class="entry-title">Pastéis de Belém</div>
-        <div class="entry-note">La receta original desde 1837. Comerlos ahí mismo con azúcar y canela — no en caja para llevar.</div>
-      </div>
-    </div>
-
-    <div class="entry">
-      <div class="time-label">18:30</div>
-      <div class="entry-card">
-        <div class="tags"><span class="tag t-view">Atardecer</span></div>
-        <div class="entry-title">Sunset: Ribeira das Naus</div>
-        <div class="entry-note">De regreso al centro, parar sobre el Tajo. Al nivel del agua, sin subir colinas, con el Puente 25 de Abril de fondo.</div>
-      </div>
-    </div>
-
-    <div class="entry">
-      <div class="time-label">19:30</div>
-      <div class="entry-card">
-        <div class="tags"><span class="tag t-bar">Bar</span></div>
-        <div class="entry-title">Aperitivo: Calma — vino y tapas</div>
-        <div class="entry-note">Chiado, a pie del hotel. Descansar piernas y cargar energía para la noche con vino portugués.</div>
-      </div>
-    </div>
-
-    <div class="entry">
-      <div class="time-label">21:00</div>
-      <div class="entry-card">
-        <div class="tags"><span class="tag t-food">Cena</span></div>
-        <div class="entry-title">Cena: Oyster & Margaritas o Taverna das Marias</div>
-        <div class="entry-note">Oyster & Margaritas si reservaron — cena de nivel. Taverna das Marias si prefieren platos chicos y vinos sin reserva, ambiente más local. Ambas zona Chiado.</div>
-      </div>
-    </div>
-
-    <div class="entry highlight">
-      <div class="time-label">23:00</div>
-      <div class="entry-card is-highlight">
-        <div class="tags"><span class="tag t-bar">Nightlife · MUST</span></div>
-        <div class="entry-title">Noche: Pensão Amor → Vago → Bairro Alto → Lux Frágil ⭐</div>
-        <div class="entry-note">Pensão Amor para arrancar (ambiente único, histórico). Vago es el MUST de la lista — super coqueto. Callejear Bairro Alto entre bares. Lux Frágil después de la 1am si aguantan — el mejor antro de Lisboa.</div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<div class="section-divider"></div>
-
-<!-- ═══════════════ DIA 3 ═══════════════ -->
-<div class="day-section">
-  <div class="day-header-row">
-    <span class="day-number">Día 3</span>
-    <span class="day-title">Miércoles 25 junio — Salida</span>
-    <div class="day-divider"></div>
-  </div>
-  <div class="day-subtitle">Vuelo 8:45am · Aeropuerto a las 6:15am máximo</div>
-
-  <div class="timeline">
-
-    <div class="entry">
-      <div class="time-label">Noche ant.</div>
-      <div class="entry-card is-highlight">
-        <div class="tags"><span class="tag t-tip">Tip clave</span></div>
-        <div class="entry-title">Maletas listas antes de salir el martes</div>
-        <div class="entry-note">Empacar todo antes de la noche del martes. Check-out express al amanecer. Uber recomendado con maletas a esa hora.</div>
-      </div>
-    </div>
-
-    <div class="entry">
-      <div class="time-label">6:15</div>
-      <div class="entry-card">
-        <div class="entry-title">Aeropuerto — Uber o Metro Linha Vermelha</div>
-        <div class="entry-note">~20 min desde el hotel. Metro desde Rossio con un transbordo. Llegar 2h antes del vuelo.</div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<div class="section-divider"></div>
-
-<!-- ═══════════════ EXTRAS ═══════════════ -->
-<div class="extras-section">
-  <div class="extras-title">Si sobra tiempo — sin forzar</div>
-  <div class="extras-grid">
-    <div class="extra-item"><strong>Carmo Convent</strong>Al lado del hotel — entrar si hay hueco el lunes o martes post-tour.</div>
-    <div class="extra-item"><strong>Time Out Market</strong>En Cais do Sodré — curiosear al pasar hacia el ferry del lunes.</div>
-    <div class="extra-item"><strong>Seagull Method / Casa Casa</strong>Cafés para el lunes si llegan con tiempo antes de salir a Alfama.</div>
-    <div class="extra-item"><strong>LX Factory</strong>Lunes tarde si el shopping termina pronto. Nave industrial con diseño.</div>
-    <div class="extra-item"><strong>Playa Carcavelos</strong>Solo si Belém termina antes de las 17h el martes. Tren desde Cais do Sodré.</div>
-    <div class="extra-item"><strong>Fares / Capítulo / Lupita</strong>Alternativas de cena para cualquier noche si los primeros planes fallan.</div>
-  </div>
-</div>
-
-<!-- ═══════════════ RESTAURANTES COMPLETOS ═══════════════ -->
-<div class="section-divider"></div>
-<div class="extras-section">
-  <div class="extras-title">Lista completa de recomendaciones guardadas</div>
-  <div class="extras-grid">
-    <div class="extra-item"><strong>Desayunos</strong>Magnolia's · Dear Breakfast · Heim · Seagull Method · Casa Casa</div>
-    <div class="extra-item"><strong>Almuerzo / Comida</strong>Augusto · Faz Frio · Capítulo · Fares · A Marisqueira do Lis</div>
-    <div class="extra-item"><strong>Cena especial</strong>Ponto Final ⭐ · Oyster & Margaritas (reservar) · Parreirinha de Alfama</div>
-    <div class="extra-item"><strong>Vinos / tapas</strong>Calma · Taverna das Marias · Praia no Parque</div>
-    <div class="extra-item"><strong>Quick bites</strong>Bifanas do Afonso · Trevo · Nat'elier · Pastéis de Belém · Time Out Market</div>
-    <div class="extra-item"><strong>Pizza / otros</strong>Lupita (pizza) · Fares (mediterránea)</div>
-    <div class="extra-item"><strong>Bares noche</strong>Tower Bar ⭐ · Vago ⭐ · Pensão Amor · Bazz · Praia no Parque · Incognito · Lux Frágil</div>
-    <div class="extra-item"><strong>Shopping</strong>Nossa · Zula · Brandy Melville · Porta Azul · Loja das Conservas · Clementina · Sardinas · LX Factory</div>
-  </div>
-</div>
-
-</body>
-</html>
+    <p class="foot">Toca cada actividad para tacharla · se guarda en tu teléfono · Lisboa 🇵🇹</p>
+  </main>
+<script>
+(function(){
+  var KEY="itin-lisboa",store={};
+  try{store=JSON.parse(localStorage.getItem(KEY)||"{}");}catch(e){store={};}
+  var checks=document.querySelectorAll(".chk");
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(store));}catch(e){}}
+  function rDay(d){var t=+d.dataset.count,n=d.querySelectorAll(".chk:checked").length;
+    d.querySelector(".d-prog-num").textContent=n+"/"+t;d.classList.toggle("done",n===t&&t>0);}
+  function rAll(){var n=document.querySelectorAll(".chk:checked").length,t=checks.length;
+    document.getElementById("overallNum").textContent=n+"/"+t;
+    document.getElementById("overallBar").style.width=(t?n/t*100:0)+"%";}
+  checks.forEach(function(ch){var k=ch.dataset.k;if(store[k])ch.checked=true;
+    ch.addEventListener("change",function(){if(ch.checked)store[k]=1;else delete store[k];
+      save();rDay(ch.closest(".day"));rAll();});});
+  document.querySelectorAll(".day").forEach(rDay);rAll();
+  document.getElementById("resetBtn").addEventListener("click",function(){
+    if(!confirm("¿Borrar todos los checks de Lisboa?"))return;store={};save();
+    checks.forEach(function(c){c.checked=false;});document.querySelectorAll(".day").forEach(rDay);rAll();});
+})();
+</script>
+</body></html>
