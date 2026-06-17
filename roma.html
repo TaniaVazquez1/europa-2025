@@ -1,957 +1,535 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Roma · Jun 2025</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roma · 25–29 jun</title>
 <style>
-/* ── RESET ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { -webkit-text-size-adjust: 100%; }
-
-/* ── TOKENS ── */
-:root {
-  --cream:  #F7F3EE;
-  --sand:   #EDE6DB;
-  --line:   #DDD6CC;
-  --muted:  #8A8278;
-  --ink:    #1C1C1C;
-  --white:  #FFFFFF;
-  --terra:  #C4633A;
-  --rust:   #9E3D1B;
-  --gold:   #B8892E;
-  --olive:  #4E6130;
-  --slate:  #3A4A5C;
-  --r:      10px;
-}
-
-/* ── BASE ── */
-body {
-  background: var(--cream);
-  color: var(--ink);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-size: 15px;
-  line-height: 1.5;
-}
-
-/* ── HERO ── */
-.hero {
-  background: #1C1C1C;
-  color: var(--cream);
-  padding: 36px 20px 28px;
-  position: relative;
-  overflow: hidden;
-}
-.hero::after {
-  content: 'ROMA';
-  position: absolute;
-  right: -8px; top: -16px;
-  font-family: Georgia, serif;
-  font-size: 110px;
-  font-weight: bold;
-  color: rgba(255,255,255,.04);
-  letter-spacing: -2px;
-  line-height: 1;
-  pointer-events: none;
-  user-select: none;
-}
-.hero-label {
-  font-size: 10px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--gold);
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-.hero-title {
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 36px;
-  font-weight: normal;
-  line-height: 1.1;
-  margin-bottom: 4px;
-}
-.hero-title em { color: var(--gold); font-style: italic; }
-.hero-hotel { font-size: 12px; color: rgba(247,243,238,.55); margin-top: 6px; }
-.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
-.chip {
-  font-size: 11px;
-  padding: 5px 12px;
-  border: 1px solid rgba(247,243,238,.2);
-  border-radius: 99px;
-  color: rgba(247,243,238,.8);
-  white-space: nowrap;
-}
-.chip.done { border-color: rgba(184,137,46,.5); color: var(--gold); }
-
-/* ── LEGEND ── */
-.legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 16px;
-  padding: 12px 20px;
-  background: var(--sand);
-  border-bottom: 1px solid var(--line);
-  font-size: 11px;
-  color: var(--muted);
-}
-.legend-item { display: flex; align-items: center; gap: 5px; }
-.dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-.d-must  { background: var(--terra); }
-.d-sight { background: var(--slate); }
-.d-eat   { background: var(--olive); }
-.d-bar   { background: var(--gold); }
-.d-tip   { background: var(--line); border: 1px solid var(--muted); }
-
-/* ── MAIN ── */
-.main { padding: 16px 14px 56px; max-width: 680px; margin: 0 auto; }
-
-/* ── DAY CARD ── */
-.day {
-  background: var(--white);
-  border-radius: var(--r);
-  border: 1px solid var(--line);
-  margin-bottom: 14px;
-  overflow: hidden;
-}
-.day-hd {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  border-bottom: 1px solid transparent;
-  transition: border-color .2s;
-  user-select: none;
-}
-.day.open .day-hd { border-bottom-color: var(--line); }
-.day-num {
-  font-family: Georgia, serif;
-  font-size: 26px;
-  color: var(--terra);
-  min-width: 38px;
-  line-height: 1;
-  font-weight: bold;
-}
-.day-info { flex: 1; min-width: 0; }
-.day-name {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--ink);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.day-date { font-size: 11px; color: var(--muted); margin-top: 1px; }
-.day-tag {
-  font-size: 10px;
-  padding: 3px 9px;
-  background: var(--sand);
-  border-radius: 99px;
-  color: var(--muted);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.caret { font-size: 14px; color: var(--muted); flex-shrink: 0; transition: transform .25s; }
-.day.open .caret { transform: rotate(180deg); }
-
-/* ── BODY ── */
-.day-bd { display: none; padding: 0 16px 16px; }
-.day.open .day-bd { display: block; }
-
-/* ── SECTION ── */
-.sec { margin-top: 16px; }
-.sec-label {
-  font-size: 10px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-.sec-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
-
-/* ── ITEM ── */
-.item {
-  display: grid;
-  grid-template-columns: 46px 10px 1fr;
-  align-items: start;
-  gap: 0 8px;
-  padding: 9px 0;
-  border-bottom: 1px solid var(--line);
-}
-.item:last-child { border-bottom: none; }
-.item-time { font-size: 11px; color: var(--muted); text-align: right; padding-top: 3px; white-space: nowrap; }
-.item-dot { padding-top: 5px; }
-.item-name { font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.35; }
-.item-name.must { color: var(--terra); }
-.item-sub { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
-.tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
-.tag { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 99px; letter-spacing: .02em; }
-.t-must  { background: #FBF0EB; color: var(--rust); }
-.t-sight { background: #EEF1F5; color: var(--slate); }
-.t-eat   { background: #EEF3EC; color: var(--olive); }
-.t-bar   { background: #FBF5E8; color: #7A5C10; }
-.t-book  { background: #F5EAEE; color: #7A1530; }
-
-/* ── NOTE ── */
-.note {
-  font-size: 12px;
-  color: #6A6258;
-  background: var(--sand);
-  border-left: 3px solid var(--gold);
-  border-radius: 0 6px 6px 0;
-  padding: 10px 12px;
-  margin-top: 14px;
-  line-height: 1.6;
-}
-
-/* ── PENDING ── */
-.pending {
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  padding: 16px;
-  margin-top: 16px;
-}
-.pending h3 { font-family: Georgia, serif; font-size: 15px; color: var(--rust); margin-bottom: 12px; }
-.pending ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-.pending li { font-size: 13px; display: flex; gap: 8px; align-items: flex-start; line-height: 1.4; }
-.pending li::before { content: '□'; color: var(--terra); font-size: 16px; line-height: 1.2; flex-shrink: 0; }
-.pending em { color: var(--muted); font-style: normal; font-size: 12px; }
-
-/* ── QUICK REF ── */
-.qr-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-top: 16px; }
-.qr-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--r); padding: 14px; }
-.qr-title { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 10px; }
-.qr-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-.qr-list li { font-size: 12px; display: flex; justify-content: space-between; gap: 8px; line-height: 1.3; }
-.qr-list li span { color: var(--muted); font-size: 11px; text-align: right; flex-shrink: 0; }
-
-/* ── FOOTER ── */
-.footer { text-align: center; padding: 24px 20px; font-size: 11px; color: var(--muted); letter-spacing: .04em; }
-
-/* ── SAFE AREA (iPhone notch) ── */
-@supports (padding-bottom: env(safe-area-inset-bottom)) {
-  .main { padding-bottom: calc(56px + env(safe-area-inset-bottom)); }
-}
+  :root{
+    --accent:#C4633A; --accent2:#B8892E; --paper:#F7F3EE;
+    --ink:#23201c; --muted:#857c70; --line:#e7ded0; --card:#fffdf9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    background:var(--paper);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;padding:0 0 64px}
+  .wrap{max-width:620px;margin:0 auto;padding:0 18px}
+  .hero{background:linear-gradient(135deg,var(--accent) 0%,color-mix(in srgb,var(--accent) 78%,#000) 100%);
+    color:#fff;padding:30px 18px 26px;position:relative;overflow:hidden}
+  .hero::after{content:"";position:absolute;right:-40px;top:-40px;width:180px;height:180px;
+    background:var(--accent2);opacity:.22;border-radius:50%}
+  .hero .wrap{position:relative}
+  .back{display:inline-flex;align-items:center;gap:6px;color:#fff;text-decoration:none;
+    font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:16px}
+  .back:hover{opacity:1}
+  .flag{font-size:2.4rem;line-height:1}
+  .h-name{font-size:2.5rem;font-weight:700;letter-spacing:-.01em;margin:8px 0 2px}
+  .h-meta{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.9}
+  .h-tag{font-style:italic;opacity:.95;margin-top:10px;font-size:1.02rem}
+  .h-logi{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .h-logi span{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);
+    padding:5px 11px;border-radius:999px;font-size:.74rem}
+  .overall{margin:18px 0 6px;display:flex;align-items:center;gap:12px}
+  .bar{flex:1;height:9px;background:var(--line);border-radius:999px;overflow:hidden}
+  .bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));
+    border-radius:999px;transition:width .35s ease}
+  .overall b{font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums;min-width:54px;text-align:right}
+  .legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin:14px 0 8px}
+  .chip{display:inline-flex;align-items:center;gap:5px;font-size:.74rem;color:var(--muted)}
+  .chip i{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .day{background:var(--card);border:1px solid var(--line);border-radius:16px;margin:14px 0;
+    overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+  .day[open]{box-shadow:0 8px 24px -16px rgba(0,0,0,.35)}
+  .d-head{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:15px 16px;user-select:none}
+  .d-head::-webkit-details-marker{display:none}
+  .d-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:var(--accent);color:#fff;border-radius:10px;padding:7px 11px;min-width:64px}
+  .d-label{font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+  .d-date{font-size:.82rem;font-weight:700;white-space:nowrap}
+  .d-title{flex:1;font-size:1.12rem;font-weight:700;letter-spacing:-.01em}
+  .d-prog{display:flex;align-items:center;gap:9px;color:var(--muted)}
+  .d-prog-num{font-size:.8rem;font-variant-numeric:tabular-nums}
+  .d-chev{transition:transform .25s ease;font-size:.9rem}
+  .day[open] .d-chev{transform:rotate(180deg)}
+  .day.done .d-tab{background:#5C9A6E}
+  .day.done .d-prog-num{color:#5C9A6E;font-weight:700}
+  .d-body{padding:0 16px 14px}
+  .d-note{background:color-mix(in srgb,var(--accent2) 16%,#fff);border-left:3px solid var(--accent2);
+    border-radius:0 8px 8px 0;padding:9px 12px;font-size:.86rem;color:#5f5648;margin:2px 0 12px;font-style:italic}
+  .item{display:grid;grid-template-columns:46px 26px 1fr;align-items:start;gap:10px;
+    padding:11px 8px;border-radius:10px;cursor:pointer;position:relative;transition:background .15s}
+  .item:hover{background:#faf6ef}
+  .item + .item{border-top:1px solid #f0e9dc}
+  .chk{position:absolute;opacity:0;width:0;height:0}
+  .i-time{font-size:.78rem;font-weight:700;color:var(--accent);padding-top:3px;
+    font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .i-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:.82rem;background:color-mix(in srgb,var(--c) 16%,#fff);border:1.5px solid var(--c);line-height:1;transition:.18s}
+  .i-body{padding-top:1px}
+  .i-name{font-weight:600;display:block;transition:.18s}
+  .i-sub{font-size:.84rem;color:var(--muted);margin-top:2px}
+  .chk:checked ~ .i-dot{background:var(--c);color:#fff;border-color:var(--c)}
+  .chk:checked ~ .i-dot::after{content:"✓";position:absolute;font-size:.8rem}
+  .chk:checked ~ .i-dot *{display:none}
+  .chk:checked ~ .i-body .i-name{text-decoration:line-through;color:var(--muted);text-decoration-thickness:2px}
+  .chk:checked ~ .i-body .i-sub{opacity:.55}
+  .chk:checked ~ .i-body .i-tags{opacity:.5}
+  .chk:focus-visible ~ .i-dot{outline:2px solid var(--accent);outline-offset:2px}
+  .reset{display:block;margin:24px auto 0;background:none;border:1px solid var(--line);color:var(--muted);
+    padding:8px 18px;border-radius:999px;font:inherit;font-size:.8rem;cursor:pointer;transition:.15s}
+  .reset:hover{border-color:var(--accent);color:var(--accent)}
+  .foot{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px;font-style:italic}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+  /* ── EXTRAS ROMA ── */
+  .sec-label{font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);
+    font-weight:700;display:flex;align-items:center;gap:8px;margin:14px 2px 4px}
+  .sec-label::after{content:"";flex:1;height:1px;background:var(--line)}
+  .i-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+  .tag{font-size:.66rem;font-weight:700;padding:2px 8px;border-radius:999px;letter-spacing:.02em;
+    background:#f0e9dc;color:var(--muted)}
+  .tag.book{background:color-mix(in srgb,var(--accent2) 22%,#fff);color:#7a5c10}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:16px 0}
+  .block h3{font-size:1rem;margin-bottom:12px;color:var(--accent)}
+  .pend{list-style:none;display:flex;flex-direction:column;gap:9px}
+  .pend li{font-size:.88rem;display:flex;gap:8px;align-items:flex-start;line-height:1.4}
+  .pend li::before{content:"□";color:var(--accent);font-size:1.05rem;line-height:1.1;flex-shrink:0}
+  .pend em{color:var(--muted);font-style:normal;font-size:.8rem}
+  .trow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;
+    border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .trow:last-child{border-bottom:none}
+  .tinfo b{font-size:.9rem;display:block}
+  .tinfo span{font-size:.78rem;color:var(--muted)}
+  .tbtn{font-size:.76rem;font-weight:700;color:#fff;background:var(--accent);padding:6px 14px;
+    border-radius:999px;text-decoration:none;white-space:nowrap;flex-shrink:0}
+  .tbtn:hover{background:color-mix(in srgb,var(--accent) 82%,#000)}
+  .qr{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;margin-top:14px}
+  .qr-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .qr-card h4{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+  .qr-card ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+  .qr-card li{font-size:.8rem;display:flex;justify-content:space-between;gap:8px;line-height:1.3}
+  .qr-card li span{color:var(--muted);font-size:.72rem;text-align:right;flex-shrink:0}
 </style>
 </head>
 <body>
+  <header class="hero"><div class="wrap">
+    <a class="back" href="index.html">← Volver al viaje</a>
+    <div class="flag">🏛️</div>
+    <h1 class="h-name">Roma</h1>
+    <div class="h-meta">Italia · La Città Eterna · 25–29 junio · 4 noches</div>
+    <p class="h-tag">La Città Eterna — Trevi, Vaticano, Trastevere y Roma antigua</p>
+    <div class="h-logi"><span>🏨 Imperium Suite Trevi · Via del Boccaccio 25</span><span>🛬 Vuelo llega 12:45pm (25 jun)</span><span>🚂 Tren a Florencia 8:50am (29 jun)</span></div>
+  </div></header>
+  <main class="wrap">
+    <div class="overall"><div class="bar"><i id="overallBar"></i></div><b id="overallNum">0/49</b></div>
+    <div class="legend"><span class="chip"><i style="background:#C4633A"></i>⭐ imperdible</span><span class="chip"><i style="background:#3E7CB1"></i>👁 ver</span><span class="chip"><i style="background:#E2614C"></i>🍴 comer</span><span class="chip"><i style="background:#5C9A6E"></i>🚶 paseo</span><span class="chip"><i style="background:#8E6BB0"></i>🍸 fiesta</span><span class="chip"><i style="background:#C99A2E"></i>🏨 hotel</span><span class="chip"><i style="background:#7A8290"></i>🚆 logística</span></div>
+      <details class="day" data-day="0" data-count="7" open>
+        <summary class="d-head">
+          <span class="d-tab"><span class="d-label">Día 1</span><span class="d-date">Mié 25 jun</span></span>
+          <span class="d-title">Llegada · Trevi · Monti</span>
+          <span class="d-prog"><span class="d-prog-num">0/7</span><span class="d-chev">▾</span></span>
+        </summary>
+        <div class="d-body">
+<div class="d-note">Día suave a propósito — el Vaticano al día siguiente a las 9am requiere energía.</div>
+<div class="sec-label">Tarde</div>
+        <label class="item" style="--c:#C99A2E">
+          <input type="checkbox" class="chk" data-k="0-0">
+          <span class="i-time">15:00</span>
+          <span class="i-dot" title="hotel">🏨</span>
+          <span class="i-body"><span class="i-name">Check-in Imperium Suite Trevi</span><span class="i-sub">Dejar maletas, refrescarse tras el vuelo.</span></span>
+        </label>
+        <label class="item" style="--c:#C4633A">
+          <input type="checkbox" class="chk" data-k="0-1">
+          <span class="i-time">16:00</span>
+          <span class="i-dot" title="imperdible">⭐</span>
+          <span class="i-body"><span class="i-name">Fontana di Trevi</span><span class="i-sub">A pasos del hotel — ir ahora para fotos sin multitud.</span><span class="i-tags"><span class="tag">imperdible</span></span></span>
+        </label>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="0-2">
+          <span class="i-time">16:45</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Primer gelato: La Romana o Venchi</span><span class="i-sub">Inaugurar el viaje como se debe.</span><span class="i-tags"><span class="tag">gelato</span></span></span>
+        </label>
+        <label class="item" style="--c:#3E7CB1">
+          <input type="checkbox" class="chk" data-k="0-3">
+          <span class="i-time">17:15</span>
+          <span class="i-dot" title="ver">👁</span>
+          <span class="i-body"><span class="i-name">Piazza di Spagna + Scalinata</span><span class="i-sub">Bajar caminando desde el Pincio — la ruta clásica.</span></span>
+        </label>
+        <label class="item" style="--c:#3E7CB1">
+          <input type="checkbox" class="chk" data-k="0-4">
+          <span class="i-time">18:30</span>
+          <span class="i-dot" title="ver">👁</span>
+          <span class="i-body"><span class="i-name">Passeggiata por Monti</span><span class="i-sub">El barrio más cool de Roma — Via del Boschetto.</span></span>
+        </label>
+<div class="sec-label">Noche</div>
+        <label class="item" style="--c:#8E6BB0">
+          <input type="checkbox" class="chk" data-k="0-5">
+          <span class="i-time">19:30</span>
+          <span class="i-dot" title="fiesta">🍸</span>
+          <span class="i-body"><span class="i-name">Aperitivo: Blackmarket (Monti)</span><span class="i-sub">Onda local y buenos cócteles.</span><span class="i-tags"><span class="tag">aperitivo</span></span></span>
+        </label>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="0-6">
+          <span class="i-time">21:00</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Cena: Antica Birreria Peroni</span><span class="i-sub">Comida romana clásica, ambiente animado, precio razonable.</span></span>
+        </label>
+        </div>
+      </details>
+      <details class="day" data-day="1" data-count="12">
+        <summary class="d-head">
+          <span class="d-tab"><span class="d-label">Día 2</span><span class="d-date">Jue 26 jun</span></span>
+          <span class="d-title">Vaticano · Sant&#x27;Angelo · Trastevere</span>
+          <span class="d-prog"><span class="d-prog-num">0/12</span><span class="d-chev">▾</span></span>
+        </summary>
+        <div class="d-body">
+<div class="d-note">Día intenso: tres monumentos seguidos. No suban la cúpula hoy — guárdenla. Gianicolo es opcional.</div>
+<div class="sec-label">Mañana</div>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="1-0">
+          <span class="i-time">08:00</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Desayuno: Old Bridge Gelateria</span><span class="i-sub">Abre temprano — cornetto + gelato.</span></span>
+        </label>
+        <label class="item" style="--c:#C4633A">
+          <input type="checkbox" class="chk" data-k="1-1">
+          <span class="i-time">09:00</span>
+          <span class="i-dot" title="imperdible">⭐</span>
+          <span class="i-body"><span class="i-name">Museos Vaticanos + Capilla Sixtina</span><span class="i-sub">Llevar agua · ~3.5 h mínimo.</span><span class="i-tags"><span class="tag book">🎫 reservado · 9:00 am</span></span></span>
+        </label>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="1-2">
+          <span class="i-time">12:30</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Almuerzo: Alice Pizza o 300 Gradi</span><span class="i-sub">Pizza por porciones / panini para recargar.</span></span>
+        </label>
+<div class="sec-label">Tarde</div>
+        <label class="item" style="--c:#3E7CB1">
+          <input type="checkbox" class="chk" data-k="1-3">
+          <span class="i-time">13:45</span>
+          <span class="i-dot" title="ver">👁</span>
+          <span class="i-body"><span class="i-name">Ponte Sant&#x27;Angelo</span><span class="i-sub">El puente de los ángeles de Bernini de camino al castillo.</span></span>
+        </label>
+        <label class="item" style="--c:#C4633A">
+          <input type="checkbox" class="chk" data-k="1-4">
+          <span class="i-time">14:00</span>
+          <span class="i-dot" title="imperdible">⭐</span>
+          <span class="i-body"><span class="i-name">Castel Sant&#x27;Angelo</span><span class="i-sub">La terraza con vistas es lo mejor. Intentar entrar un poco antes.</span><span class="i-tags"><span class="tag book">🎫 reservado · 2:00 pm</span></span></span>
+        </label>
+        <label class="item" style="--c:#3E7CB1">
+          <input type="checkbox" class="chk" data-k="1-5">
+          <span class="i-time">14:55</span>
+          <span class="i-dot" title="ver">👁</span>
+          <span class="i-body"><span class="i-name">Caminata al Vaticano · 5 min</span><span class="i-sub">Del castillo a la Basílica son 5 minutos a pie.</span></span>
+        </label>
+        <label class="item" style="--c:#C4633A">
+          <input type="checkbox" class="chk" data-k="1-6">
+          <span class="i-time">15:00</span>
+          <span class="i-dot" title="imperdible">⭐</span>
+          <span class="i-body"><span class="i-name">Basílica de San Pedro</span><span class="i-sub">No subir la cúpula hoy — van a estar agotadas.</span><span class="i-tags"><span class="tag book">🎫 reservado · 3:00 pm</span></span></span>
+        </label>
+        <label class="item" style="--c:#8E6BB0">
+          <input type="checkbox" class="chk" data-k="1-7">
+          <span class="i-time">17:00</span>
+          <span class="i-dot" title="fiesta">🍸</span>
+          <span class="i-body"><span class="i-name">Rooftop: Atlante Star o Ozio</span><span class="i-sub">Vistas sobre la cúpula al atardecer. Ozio tiene buen aperitivo.</span><span class="i-tags"><span class="tag">rooftop</span></span></span>
+        </label>
+<div class="sec-label">Noche — Trastevere</div>
+        <label class="item" style="--c:#5C9A6E">
+          <input type="checkbox" class="chk" data-k="1-8">
+          <span class="i-time">19:30</span>
+          <span class="i-dot" title="paseo">🚶</span>
+          <span class="i-body"><span class="i-name">Gianicolo → Acqua Paola → Trastevere</span><span class="i-sub">La caminata más linda de Roma. Bajar a pie al barrio.</span><span class="i-tags"><span class="tag">vista panorámica</span></span></span>
+        </label>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="1-9">
+          <span class="i-time">21:00</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Cena: Tonnarello / Nannarella / Da Enzo al 29</span><span class="i-sub">Los tres excelentes. Da Enzo: reservar.</span><span class="i-tags"><span class="tag book">Da Enzo: reservar</span></span></span>
+        </label>
+        <label class="item" style="--c:#8E6BB0">
+          <input type="checkbox" class="chk" data-k="1-10">
+          <span class="i-time">23:00</span>
+          <span class="i-dot" title="fiesta">🍸</span>
+          <span class="i-body"><span class="i-name">Bares: Freni e Frizioni · Ombre Rosse · San Callisto</span><span class="i-sub">San Callisto = 100% local y baratísimo.</span></span>
+        </label>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="1-11">
+          <span class="i-time">23:30</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Maritozzo: Maritozzaro</span><span class="i-sub">El postre romano por excelencia.</span></span>
+        </label>
+        </div>
+      </details>
+      <details class="day" data-day="2" data-count="12">
+        <summary class="d-head">
+          <span class="d-tab"><span class="d-label">Día 3</span><span class="d-date">Vie 27 jun</span></span>
+          <span class="d-title">Coliseo · Foro · Aventino · Testaccio</span>
+          <span class="d-prog"><span class="d-prog-num">0/12</span><span class="d-chev">▾</span></span>
+        </summary>
+        <div class="d-body">
+<div class="sec-label">Mañana — Foro primero (evita el calor)</div>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="2-0">
+          <span class="i-time">08:30</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Maritozzo: Regoli o Roscioli</span><span class="i-sub">Si no lo comieron anoche — obligatorio.</span></span>
+        </label>
+        <label class="item" style="--c:#C4633A">
+          <input type="checkbox" class="chk" data-k="2-1">
+          <span class="i-time">09:00</span>
+          <span class="i-dot" title="imperdible">⭐</span>
+          <span class="i-body"><span class="i-name">Foro Romano + Palatino</span><span class="i-sub">Misma entrada del Coliseo. El Palatino tiene las mejores vistas. Mucha agua.</span><span class="i-tags"><span class="tag book">🎫 entrar antes de 12pm</span></span></span>
+        </label>
+        <label class="item" style="--c:#3E7CB1">
+          <input type="checkbox" class="chk" data-k="2-2">
+          <span class="i-time">11:15</span>
+          <span class="i-dot" title="ver">👁</span>
+          <span class="i-body"><span class="i-name">Caminar al Coliseo · 5 min</span><span class="i-sub">Presentarse 15 min antes de la hora reservada.</span></span>
+        </label>
+        <label class="item" style="--c:#C4633A">
+          <input type="checkbox" class="chk" data-k="2-3">
+          <span class="i-time">12:00</span>
+          <span class="i-dot" title="imperdible">⭐</span>
+          <span class="i-body"><span class="i-name">Coliseo</span><span class="i-sub">75 min de visita. Llevar ID.</span><span class="i-tags"><span class="tag book">🎫 reservado · 12:00 pm</span></span></span>
+        </label>
+<div class="sec-label">Mediodía</div>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="2-4">
+          <span class="i-time">13:30</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Almuerzo: Pastificio Guerra o Pippo Tortellino</span><span class="i-sub">Pasta fresca para llevar, de pie en una piazza.</span></span>
+        </label>
+        <label class="item" style="--c:#C4633A">
+          <input type="checkbox" class="chk" data-k="2-5">
+          <span class="i-time">14:30</span>
+          <span class="i-dot" title="imperdible">⭐</span>
+          <span class="i-body"><span class="i-name">Piazza del Campidoglio + Altare della Patria</span><span class="i-sub">Plaza de Michelangelo. Subir al Altare: vista 360°.</span></span>
+        </label>
+<div class="sec-label">Tarde — Aventino</div>
+        <label class="item" style="--c:#C4633A">
+          <input type="checkbox" class="chk" data-k="2-6">
+          <span class="i-time">15:30</span>
+          <span class="i-dot" title="imperdible">⭐</span>
+          <span class="i-body"><span class="i-name">Giardino degli Aranci</span><span class="i-sub">Las mejores vistas gratuitas de Roma, casi sin turistas.</span></span>
+        </label>
+        <label class="item" style="--c:#C4633A">
+          <input type="checkbox" class="chk" data-k="2-7">
+          <span class="i-time">16:00</span>
+          <span class="i-dot" title="imperdible">⭐</span>
+          <span class="i-body"><span class="i-name">Aventine Keyhole</span><span class="i-sub">La cerradura que enmarca la cúpula de San Pedro. Secreto romano.</span></span>
+        </label>
+        <label class="item" style="--c:#3E7CB1">
+          <input type="checkbox" class="chk" data-k="2-8">
+          <span class="i-time">17:00</span>
+          <span class="i-dot" title="ver">👁</span>
+          <span class="i-body"><span class="i-name">Barrio de Testaccio</span><span class="i-sub">El más auténtico y menos turístico de Roma.</span></span>
+        </label>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="2-9">
+          <span class="i-time">18:00</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Gelato: La Romana ⭐</span><span class="i-sub">La favorita — la mejor de Roma.</span></span>
+        </label>
+<div class="sec-label">Noche</div>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="2-10">
+          <span class="i-time">20:30</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Cena: Da Felice a Testaccio</span><span class="i-sub">De los mejores de Roma.</span><span class="i-tags"><span class="tag book">reservar con antelación</span></span></span>
+        </label>
+        <label class="item" style="--c:#8E6BB0">
+          <input type="checkbox" class="chk" data-k="2-11">
+          <span class="i-time">23:00</span>
+          <span class="i-dot" title="fiesta">🍸</span>
+          <span class="i-body"><span class="i-name">Antros: Alcazar · Naos · The Circle · Sanctuary</span><span class="i-sub">Verificar cuál abre ese viernes.</span></span>
+        </label>
+        </div>
+      </details>
+      <details class="day" data-day="3" data-count="14">
+        <summary class="d-head">
+          <span class="d-tab"><span class="d-label">Día 4</span><span class="d-date">Sáb 28 jun</span></span>
+          <span class="d-title">Panteón · Navona · Campo de Fiori</span>
+          <span class="d-prog"><span class="d-prog-num">0/14</span><span class="d-chev">▾</span></span>
+        </summary>
+        <div class="d-body">
+<div class="d-note">Maletas listas esta noche — el tren sale 8:50am. Dejar en consigna si el check-out es a las 11.</div>
+<div class="sec-label">Mañana temprano (si aplica)</div>
+        <label class="item" style="--c:#C4633A">
+          <input type="checkbox" class="chk" data-k="3-0">
+          <span class="i-time">07:00</span>
+          <span class="i-dot" title="imperdible">⭐</span>
+          <span class="i-body"><span class="i-name">Porta Portese (solo domingos · 6am–2pm)</span><span class="i-sub">Si el 28 cae domingo — gran mercado de pulgas.</span><span class="i-tags"><span class="tag">solo domingos</span></span></span>
+        </label>
+<div class="sec-label">Mañana</div>
+        <label class="item" style="--c:#C4633A">
+          <input type="checkbox" class="chk" data-k="3-1">
+          <span class="i-time">09:00</span>
+          <span class="i-dot" title="imperdible">⭐</span>
+          <span class="i-body"><span class="i-name">Panteón</span><span class="i-sub">Ir puntual. La oculus es mágica.</span><span class="i-tags"><span class="tag book">🎫 reservado · 9:00 am</span></span></span>
+        </label>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="3-2">
+          <span class="i-time">10:30</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Gelato: Giolitti · La Palma · Frigidarium</span><span class="i-sub">Giolitti famoso · La Palma 100+ sabores · Frigidarium en chocolate.</span></span>
+        </label>
+        <label class="item" style="--c:#C4633A">
+          <input type="checkbox" class="chk" data-k="3-3">
+          <span class="i-time">11:00</span>
+          <span class="i-dot" title="imperdible">⭐</span>
+          <span class="i-body"><span class="i-name">Piazza Navona + Fontana dei Quattro Fiumi</span><span class="i-sub">Bernini en su máxima expresión.</span></span>
+        </label>
+        <label class="item" style="--c:#8E6BB0">
+          <input type="checkbox" class="chk" data-k="3-4">
+          <span class="i-time">12:00</span>
+          <span class="i-dot" title="fiesta">🍸</span>
+          <span class="i-body"><span class="i-name">Bar del Fico o Drink Art Gallery</span><span class="i-sub">Aperitivo al borde de la piazza.</span><span class="i-tags"><span class="tag">aperitivo</span></span></span>
+        </label>
+<div class="sec-label">Mediodía</div>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="3-5">
+          <span class="i-time">13:30</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Almuerzo: Obika Mozzarella Bar</span><span class="i-sub">Pizzas gourmet con mozzarella di bufala.</span></span>
+        </label>
+        <label class="item" style="--c:#3E7CB1">
+          <input type="checkbox" class="chk" data-k="3-6">
+          <span class="i-time">14:30</span>
+          <span class="i-dot" title="ver">👁</span>
+          <span class="i-body"><span class="i-name">Largo Argentina</span><span class="i-sub">Donde asesinaron a Julio César + los gatos de Roma.</span></span>
+        </label>
+        <label class="item" style="--c:#3E7CB1">
+          <input type="checkbox" class="chk" data-k="3-7">
+          <span class="i-time">15:30</span>
+          <span class="i-dot" title="ver">👁</span>
+          <span class="i-body"><span class="i-name">Campo de Fiori</span><span class="i-sub">Plaza animada · Argot bar para una copa.</span></span>
+        </label>
+<div class="sec-label">Tarde</div>
+        <label class="item" style="--c:#3E7CB1">
+          <input type="checkbox" class="chk" data-k="3-8">
+          <span class="i-time">16:30</span>
+          <span class="i-dot" title="ver">👁</span>
+          <span class="i-body"><span class="i-name">Rooftop La Rinascente</span><span class="i-sub">Vistas sobre tejados y el Panteón — gratis si solo toman algo.</span></span>
+        </label>
+        <label class="item" style="--c:#5C9A6E">
+          <input type="checkbox" class="chk" data-k="3-9">
+          <span class="i-time">17:15</span>
+          <span class="i-dot" title="paseo">🚶</span>
+          <span class="i-body"><span class="i-name">Pincio → Scalinata di Spagna</span><span class="i-sub">Atardecer con vistas sobre Roma.</span></span>
+        </label>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="3-10">
+          <span class="i-time">18:30</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Tiramisu: Pompi</span><span class="i-sub">A pasos del hotel — el mejor tiramisú de Roma.</span><span class="i-tags"><span class="tag">imperdible</span></span></span>
+        </label>
+<div class="sec-label">Noche — Última noche en Roma</div>
+        <label class="item" style="--c:#8E6BB0">
+          <input type="checkbox" class="chk" data-k="3-11">
+          <span class="i-time">20:00</span>
+          <span class="i-dot" title="fiesta">🍸</span>
+          <span class="i-body"><span class="i-name">Rooftop: Terrazza Borromini</span><span class="i-sub">Caro pero la vista 360° vale la pena para despedir Roma.</span><span class="i-tags"><span class="tag">mejor vista</span></span></span>
+        </label>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="3-12">
+          <span class="i-time">21:30</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Cena: La Montecarlo o Baffetto</span><span class="i-sub">Pizza romana finísima — las más históricas.</span></span>
+        </label>
+        <label class="item" style="--c:#8E6BB0">
+          <input type="checkbox" class="chk" data-k="3-13">
+          <span class="i-time">23:30</span>
+          <span class="i-dot" title="fiesta">🍸</span>
+          <span class="i-body"><span class="i-name">Última copa: Pimm&#x27;s Good · Ombre Rosse · antigallery</span><span class="i-sub">antigallery = spritz baratísimo en plazuela local.</span></span>
+        </label>
+        </div>
+      </details>
+      <details class="day" data-day="4" data-count="4">
+        <summary class="d-head">
+          <span class="d-tab"><span class="d-label">Día 5</span><span class="d-date">Dom 29 jun</span></span>
+          <span class="d-title">Salida a Florencia 🚂</span>
+          <span class="d-prog"><span class="d-prog-num">0/4</span><span class="d-chev">▾</span></span>
+        </summary>
+        <div class="d-body">
+<div class="d-note">Si el check-out es 11am, dejar maletas en consigna de Termini y dar una última vuelta.</div>
+<div class="sec-label">Mañana</div>
+        <label class="item" style="--c:#7A8290">
+          <input type="checkbox" class="chk" data-k="4-0">
+          <span class="i-time">06:30</span>
+          <span class="i-dot" title="logística">🚆</span>
+          <span class="i-body"><span class="i-name">Despertar · maletas listas</span><span class="i-sub">Termini está a ~15 min en metro o taxi.</span></span>
+        </label>
+        <label class="item" style="--c:#E2614C">
+          <input type="checkbox" class="chk" data-k="4-1">
+          <span class="i-time">07:00</span>
+          <span class="i-dot" title="comer">🍴</span>
+          <span class="i-body"><span class="i-name">Desayuno: Mercato Centrale (Termini)</span><span class="i-sub">Dentro de la estación. Ir directo con maletas.</span></span>
+        </label>
+        <label class="item" style="--c:#7A8290">
+          <input type="checkbox" class="chk" data-k="4-2">
+          <span class="i-time">08:20</span>
+          <span class="i-dot" title="logística">🚆</span>
+          <span class="i-body"><span class="i-name">Andén — Trenitalia / Italo</span><span class="i-sub">Llegar 30 min antes con maletas.</span></span>
+        </label>
+        <label class="item" style="--c:#C4633A">
+          <input type="checkbox" class="chk" data-k="4-3">
+          <span class="i-time">08:50</span>
+          <span class="i-dot" title="imperdible">⭐</span>
+          <span class="i-body"><span class="i-name">🚂 Partenza per Firenze!</span></span>
+        </label>
+        </div>
+      </details>
+    <button class="reset" id="resetBtn">Reiniciar checks</button>
 
-<!-- BACK -->
-<a href="index.html" style="display:flex;align-items:center;gap:8px;padding:12px 20px;background:#1C1C1C;color:rgba(247,243,238,.7);font-size:12px;text-decoration:none;font-family:-apple-system,sans-serif;">‹ Volver al inicio</a>
+    <div class="block"><h3>📋 Pendiente por reservar</h3><ul class="pend"><li>Da Felice a Testaccio <em>— reservar con semanas de antelación</em></li><li>Da Enzo al 29 (Trastevere) <em>— si se planea ir</em></li><li>Terrazza Borromini <em>— verificar si requiere reserva</em></li></ul></div>
+    <div class="block"><h3>🎫 Entradas y boletos</h3>      <div class="trow">
+        <div class="ticket-left" style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+          <div class="i-dot" style="--c:var(--accent);width:32px;height:32px">🏛</div>
+          <div class="tinfo"><b>Museos Vaticanos + Capilla Sixtina</b><span>26 jun · 9:00 am · Tania, Marycruz, Maria Jose</span></div>
+        </div><a class="tbtn" href="tickets/ticket_vaticano.pdf" target="_blank">Ver boleto →</a>
+      </div>      <div class="trow">
+        <div class="ticket-left" style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+          <div class="i-dot" style="--c:var(--accent);width:32px;height:32px">🏰</div>
+          <div class="tinfo"><b>Castel Sant&#x27;Angelo</b><span>26 jun · 2:00 pm · Tania, Marycruz, Maria Jose</span></div>
+        </div><a class="tbtn" href="tickets/ticket_santangelo.pdf" target="_blank">Ver boleto →</a>
+      </div>      <div class="trow">
+        <div class="ticket-left" style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+          <div class="i-dot" style="--c:var(--accent);width:32px;height:32px">⛪</div>
+          <div class="tinfo"><b>Basílica de San Pedro</b><span>26 jun · 3:00 pm · Tania, Marycruz, Maria Jose</span></div>
+        </div><a class="tbtn" href="tickets/ticket_sanpedro.pdf" target="_blank">Ver boleto →</a>
+      </div>      <div class="trow">
+        <div class="ticket-left" style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+          <div class="i-dot" style="--c:var(--accent);width:32px;height:32px">🏟</div>
+          <div class="tinfo"><b>Coliseo + Foro Romano + Palatino</b><span>27 jun · 12:00 pm · Tania, Marycruz, Maria Jose</span></div>
+        </div><a class="tbtn" href="tickets/ticket_coliseo.pdf" target="_blank">Ver boleto →</a>
+      </div>      <div class="trow">
+        <div class="ticket-left" style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+          <div class="i-dot" style="--c:var(--accent);width:32px;height:32px">🏺</div>
+          <div class="tinfo"><b>Panteón</b><span>28 jun · 9:00 am · Tania, Marycruz, Maria Jose</span></div>
+        </div><a class="tbtn" href="tickets/ticket_panteon.pdf" target="_blank">Ver boleto →</a>
+      </div></div>
+    <div class="block"><h3>📚 Quick reference</h3><div class="qr"><div class="qr-card"><h4>🍕 Quick bites</h4><ul><li>Alice Pizza <span>Largo Argentina/Vaticano</span></li><li>300 Gradi <span>Vaticano · panini</span></li><li>Mercato Centrale <span>Termini · todo</span></li><li>Pastificio Guerra <span>Piazza di Spagna</span></li><li>Pippo Tortellino <span>pasta para llevar</span></li></ul></div><div class="qr-card"><h4>🍦 Gelaterías</h4><ul><li>La Romana ⭐ <span>la favorita</span></li><li>Frigidarium <span>Navona · en chocolate</span></li><li>Old Bridge <span>Vaticano · madrugar</span></li><li>Giolitti <span>Panteón · la más famosa</span></li><li>Venchi <span>Via del Corso</span></li><li>Grom <span>Campo de Fiori</span></li></ul></div><div class="qr-card"><h4>🍷 Bares Trastevere</h4><ul><li>Freni e Frizioni <span>animado</span></li><li>Ombre Rosse <span>terraza</span></li><li>Pimm&#x27;s Good <span>buena vibra</span></li><li>San Callisto <span>100% local</span></li></ul></div><div class="qr-card"><h4>🎭 Antros</h4><ul><li>Alcazar <span>—</span></li><li>Naos <span>—</span></li><li>The Circle <span>—</span></li><li>Sanctuary <span>—</span></li></ul></div><div class="qr-card"><h4>🍮 Dulces romanos</h4><ul><li>Pompi <span>tiramisu · cerca Trevi</span></li><li>Regoli <span>maritozzo · Monti</span></li><li>Roscioli <span>maritozzo · C. de Fiori</span></li><li>Maritozzaro <span>maritozzo · Trastevere</span></li></ul></div><div class="qr-card"><h4>🏛 Rooftops</h4><ul><li>Terrazza Borromini <span>Navona · $$$ wow</span></li><li>Atlante Star <span>Vaticano</span></li><li>Ozio <span>Vaticano · aperitivo</span></li><li>La Rinascente <span>Via del Tritone</span></li></ul></div></div></div>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-label">Viaje · Europa 2025</div>
-  <h1 class="hero-title">La <em>Città Eterna</em></h1>
-  <div class="hero-hotel">Hotel Imperium Suite Trevi · Via del Boccaccio, 25</div>
-  <div class="chips">
-    <div class="chip">✈ Llegada 25 jun · 12:45 pm</div>
-    <div class="chip">🚂 Salida 29 jun · 8:50 am → Florencia</div>
-    <div class="chip done">🎫 Museos Vaticanos 26 jun · 9 am ✓</div>
-    <div class="chip done">🏰 Castel Sant'Angelo 26 jun · 2 pm ✓</div>
-    <div class="chip done">⛪ Basílica San Pedro 26 jun · 3 pm ✓</div>
-    <div class="chip done">🏛 Coliseo + Foro + Palatino 27 jun · 12 pm ✓</div>
-    <div class="chip done">🏺 Panteón 28 jun · 9 am ✓</div>
-  </div>
-</div>
-
-<!-- LEGEND -->
-<div class="legend">
-  <div class="legend-item"><span class="dot d-must"></span>Imperdible</div>
-  <div class="legend-item"><span class="dot d-sight"></span>Sightseeing</div>
-  <div class="legend-item"><span class="dot d-eat"></span>Comer</div>
-  <div class="legend-item"><span class="dot d-bar"></span>Bares / Noche</div>
-  <div class="legend-item"><span class="dot d-tip"></span>Consejo</div>
-</div>
-
-<!-- MAIN -->
-<div class="main">
-
-  <!-- ── DÍA 1 · 25 JUN ── -->
-  <div class="day open" id="d1">
-    <div class="day-hd" onclick="tog('d1')">
-      <div class="day-num">25</div>
-      <div class="day-info">
-        <div class="day-name">Llegada · Trevi · Monti</div>
-        <div class="day-date">Miércoles 25 de junio</div>
-      </div>
-      <div class="day-tag">Llegada tranquila</div>
-      <div class="caret">▾</div>
-    </div>
-    <div class="day-bd">
-      <div class="sec">
-        <div class="sec-label">Tarde</div>
-        <div class="item">
-          <div class="item-time">~15:00</div>
-          <div class="item-dot"><span class="dot d-tip"></span></div>
-          <div class="item-content">
-            <div class="item-name">Check-in Hotel Imperium Suite Trevi</div>
-            <div class="item-sub">Dejar maletas, refrescarse tras el vuelo</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">~16:00</div>
-          <div class="item-dot"><span class="dot d-must"></span></div>
-          <div class="item-content">
-            <div class="item-name must">★ Fontana di Trevi</div>
-            <div class="item-sub">A pasos del hotel — ir ahora para fotos sin multitud</div>
-            <div class="tags"><span class="tag t-must">imperdible</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">~16:45</div>
-          <div class="item-dot"><span class="dot d-eat"></span></div>
-          <div class="item-content">
-            <div class="item-name">Primer gelato: La Romana o Venchi</div>
-            <div class="item-sub">Inaugurar el viaje como se debe</div>
-            <div class="tags"><span class="tag t-eat">gelato</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">~17:15</div>
-          <div class="item-dot"><span class="dot d-sight"></span></div>
-          <div class="item-content">
-            <div class="item-name">Piazza di Spagna + Scalinata</div>
-            <div class="item-sub">Bajar caminando desde el Pincio — la ruta clásica</div>
-            <div class="tags"><span class="tag t-sight">sightseeing</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">~18:30</div>
-          <div class="item-dot"><span class="dot d-sight"></span></div>
-          <div class="item-content">
-            <div class="item-name">Passeggiata por Monti</div>
-            <div class="item-sub">El barrio más cool de Roma — callejear por Via del Boschetto</div>
-            <div class="tags"><span class="tag t-sight">barrio</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="sec">
-        <div class="sec-label">Noche</div>
-        <div class="item">
-          <div class="item-time">~19:30</div>
-          <div class="item-dot"><span class="dot d-bar"></span></div>
-          <div class="item-content">
-            <div class="item-name">Aperitivo: Blackmarket (Monti)</div>
-            <div class="item-sub">Bar con mucha onda local y buena selección de cócteles</div>
-            <div class="tags"><span class="tag t-bar">aperitivo</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">~21:00</div>
-          <div class="item-dot"><span class="dot d-eat"></span></div>
-          <div class="item-content">
-            <div class="item-name">Cena: Antica Birreria Peroni (Piazza Venezia)</div>
-            <div class="item-sub">Comida romana clásica, ambiente animado, precio razonable</div>
-            <div class="tags"><span class="tag t-eat">cena</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="note">💡 Día suave a propósito — el Vaticano al día siguiente a las 9 am requiere energía. Si llegan cansados del vuelo, cena cerca del hotel y a descansar.</div>
-    </div>
-  </div>
-
-  <!-- ── DÍA 2 · 26 JUN ── -->
-  <div class="day" id="d2">
-    <div class="day-hd" onclick="tog('d2')">
-      <div class="day-num">26</div>
-      <div class="day-info">
-        <div class="day-name">Vaticano · Sant'Angelo · Trastevere</div>
-        <div class="day-date">Jueves 26 de junio</div>
-      </div>
-      <div class="day-tag">9am · 2pm · 3pm ✓</div>
-      <div class="caret">▾</div>
-    </div>
-    <div class="day-bd">
-      <div class="sec">
-        <div class="sec-label">Mañana</div>
-        <div class="item">
-          <div class="item-time">08:00</div>
-          <div class="item-dot"><span class="dot d-eat"></span></div>
-          <div class="item-content">
-            <div class="item-name">Desayuno: Old Bridge Gelateria (Vaticano)</div>
-            <div class="item-sub">Abre temprano — cornetto + gelato = desayuno romano auténtico</div>
-            <div class="tags"><span class="tag t-eat">desayuno</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">09:00</div>
-          <div class="item-dot"><span class="dot d-must"></span></div>
-          <div class="item-content">
-            <div class="item-name must">★ Museos Vaticanos + Capilla Sixtina</div>
-            <div class="item-sub">Boletos ya comprados ✓ · Llevar agua · Plan ~3.5 horas mínimo</div>
-            <div class="tags"><span class="tag t-must">imperdible</span><span class="tag t-book">✓ reservado</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">12:30</div>
-          <div class="item-dot"><span class="dot d-eat"></span></div>
-          <div class="item-content">
-            <div class="item-name">Almuerzo: Alice Pizza o 300 Gradi (Vaticano)</div>
-            <div class="item-sub">Pizza por porciones / panini para recargar energía</div>
-            <div class="tags"><span class="tag t-eat">almuerzo rápido</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="sec">
-        <div class="sec-label">Tarde</div>
-        <div class="item">
-          <div class="item-time">13:45</div>
-          <div class="item-dot"><span class="dot d-sight"></span></div>
-          <div class="item-content">
-            <div class="item-name">Ponte Sant'Angelo</div>
-            <div class="item-sub">Cruzar el puente de los ángeles de Bernini de camino al castillo — 5 min</div>
-            <div class="tags"><span class="tag t-sight">monumento</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">14:00</div>
-          <div class="item-dot"><span class="dot d-must"></span></div>
-          <div class="item-content">
-            <div class="item-name must">★ Castel Sant'Angelo</div>
-            <div class="item-sub">Boletos ya comprados ✓ · Hora reservada · ~50 min · La terraza con vistas es lo mejor · Intentar entrar un poco antes si hay posibilidad</div>
-            <div class="tags"><span class="tag t-must">imperdible</span><span class="tag t-book">✓ reservado · 2:00 pm</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">14:55</div>
-          <div class="item-dot"><span class="dot d-sight"></span></div>
-          <div class="item-content">
-            <div class="item-name">Caminata al Vaticano · 5 min</div>
-            <div class="item-sub">Castel Sant'Angelo a la entrada de la Basílica son literalmente 5 minutos a pie</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">15:00</div>
-          <div class="item-dot"><span class="dot d-must"></span></div>
-          <div class="item-content">
-            <div class="item-name must">★ Basílica de San Pedro</div>
-            <div class="item-sub">Boletos ya comprados ✓ · No subir la cúpula hoy — ya van a estar agotadas después del Vaticano y el castillo</div>
-            <div class="tags"><span class="tag t-must">imperdible</span><span class="tag t-book">✓ reservado · 3:00 pm</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">~17:00</div>
-          <div class="item-dot"><span class="dot d-sight"></span></div>
-          <div class="item-content">
-            <div class="item-name">Rooftop: Atlante Star o Ozio (Vaticano)</div>
-            <div class="item-sub">Vistas sobre la cúpula de San Pedro al atardecer · Ozio tiene buen aperitivo · Merecidísimo después del día</div>
-            <div class="tags"><span class="tag t-sight">rooftop</span><span class="tag t-bar">aperitivo</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="sec">
-        <div class="sec-label">Noche — Trastevere</div>
-        <div class="item">
-          <div class="item-time">19:30</div>
-          <div class="item-dot"><span class="dot d-sight"></span></div>
-          <div class="item-content">
-            <div class="item-name">Gianicolo → Fontana dell'Acqua Paola → Trastevere</div>
-            <div class="item-sub">La caminata más linda de Roma — vistas panorámicas. Bajar a pie al barrio.</div>
-            <div class="tags"><span class="tag t-sight">paseo</span><span class="tag t-must">vista panorámica</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">21:00</div>
-          <div class="item-dot"><span class="dot d-eat"></span></div>
-          <div class="item-content">
-            <div class="item-name">Cena: Tonnarello / Nannarella / Da Enzo al 29</div>
-            <div class="item-sub">Los tres son excelentes · Da Enzo: reservar con antelación</div>
-            <div class="tags"><span class="tag t-eat">cena</span><span class="tag t-book">Da Enzo: reservar</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">23:00</div>
-          <div class="item-dot"><span class="dot d-bar"></span></div>
-          <div class="item-content">
-            <div class="item-name">Bares: Freni e Frizioni · Ombre Rosse · San Callisto · Pimm's Good</div>
-            <div class="item-sub">San Callisto = 100% local y baratísimo. Freni e Frizioni = más animado.</div>
-            <div class="tags"><span class="tag t-bar">copas</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">~23:30</div>
-          <div class="item-dot"><span class="dot d-eat"></span></div>
-          <div class="item-content">
-            <div class="item-name">Maritozzo: Maritozzaro (Trastevere)</div>
-            <div class="item-sub">El postre romano por excelencia — probar sí o sí</div>
-            <div class="tags"><span class="tag t-eat">postre típico</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="note">💡 Día muy intenso con tres monumentos seguidos. No planeen subir la cúpula de la Basílica hoy — guárdenla para otro momento. El Gianicolo es opcional si no hay energía — Trastevere directo en taxi también funciona.</div>
-    </div>
-  </div>
-
-  <!-- ── DÍA 3 · 27 JUN ── -->
-  <div class="day" id="d3">
-    <div class="day-hd" onclick="tog('d3')">
-      <div class="day-num">27</div>
-      <div class="day-info">
-        <div class="day-name">Coliseo · Foro · Aventino · Testaccio</div>
-        <div class="day-date">Viernes 27 de junio</div>
-      </div>
-      <div class="day-tag">Roma antigua</div>
-      <div class="caret">▾</div>
-    </div>
-    <div class="day-bd">
-      <div class="sec">
-        <div class="sec-label">Mañana — Foro primero para evitar el calor</div>
-        <div class="item">
-          <div class="item-time">08:30</div>
-          <div class="item-dot"><span class="dot d-eat"></span></div>
-          <div class="item-content">
-            <div class="item-name">Maritozzo: Regoli (Monti) o Roscioli (Campo de Fiori)</div>
-            <div class="item-sub">Si no lo comieron anoche — obligatorio en el desayuno</div>
-            <div class="tags"><span class="tag t-eat">desayuno</span><span class="tag t-must">típico romano</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">09:00</div>
-          <div class="item-dot"><span class="dot d-must"></span></div>
-          <div class="item-content">
-            <div class="item-name must">★ Foro Romano + Palatino</div>
-            <div class="item-sub">Entrar temprano con la misma entrada del Coliseo — dentro de las 24h antes de las 12pm · El Palatino tiene las mejores vistas · Llevar mucha agua</div>
-            <div class="tags"><span class="tag t-must">imperdible</span><span class="tag t-book">✓ misma entrada · entrar antes de las 12pm</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">11:15</div>
-          <div class="item-dot"><span class="dot d-sight"></span></div>
-          <div class="item-content">
-            <div class="item-name">Caminar al Coliseo · 5 min</div>
-            <div class="item-sub">Presentarse 15 minutos antes de la hora reservada según indica el boleto</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">12:00</div>
-          <div class="item-dot"><span class="dot d-must"></span></div>
-          <div class="item-content">
-            <div class="item-name must">★ Coliseo</div>
-            <div class="item-sub">Boletos ya comprados ✓ · Hora reservada · 75 min de visita · Llevar ID</div>
-            <div class="tags"><span class="tag t-must">imperdible</span><span class="tag t-book">✓ reservado · 12:00 pm</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="sec">
-        <div class="sec-label">Mediodía</div>
-        <div class="item">
-          <div class="item-time">13:30</div>
-          <div class="item-dot"><span class="dot d-eat"></span></div>
-          <div class="item-content">
-            <div class="item-name">Almuerzo: Pastificio Guerra (Spagna) o Pippo Tortellino</div>
-            <div class="item-sub">Pasta fresca para llevar — almuerzo romano de pie en una piazza · Bien merecido</div>
-            <div class="tags"><span class="tag t-eat">almuerzo</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">14:30</div>
-          <div class="item-dot"><span class="dot d-must"></span></div>
-          <div class="item-content">
-            <div class="item-name must">★ Piazza del Campidoglio + Altare della Patria</div>
-            <div class="item-sub">Plaza de Michelangelo. Subir al Altare — primer piso gratis, ascensor arriba se paga. Vista 360° increíble.</div>
-            <div class="tags"><span class="tag t-must">vista panorámica</span><span class="tag t-sight">monumento</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="sec">
-        <div class="sec-label">Tarde — Aventino</div>
-        <div class="item">
-          <div class="item-time">15:30</div>
-          <div class="item-dot"><span class="dot d-must"></span></div>
-          <div class="item-content">
-            <div class="item-name must">★ Giardino degli Aranci (Aventino)</div>
-            <div class="item-sub">Las mejores vistas gratuitas de Roma — tranquilo, casi sin turistas</div>
-            <div class="tags"><span class="tag t-must">vista panorámica</span><span class="tag t-sight">jardín</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">16:00</div>
-          <div class="item-dot"><span class="dot d-must"></span></div>
-          <div class="item-content">
-            <div class="item-name must">★ Aventine Keyhole (Piazza dei Cavalieri di Malta)</div>
-            <div class="item-sub">El agujero de cerradura que enmarca la cúpula de San Pedro — secreto romano que no falla</div>
-            <div class="tags"><span class="tag t-must">secreto</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">17:00</div>
-          <div class="item-dot"><span class="dot d-sight"></span></div>
-          <div class="item-content">
-            <div class="item-name">Barrio de Testaccio</div>
-            <div class="item-sub">El barrio más auténtico y menos turístico de Roma</div>
-            <div class="tags"><span class="tag t-sight">barrio local</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">18:00</div>
-          <div class="item-dot"><span class="dot d-eat"></span></div>
-          <div class="item-content">
-            <div class="item-name">Gelato: La Romana ⭐</div>
-            <div class="item-sub">La favorita — la mejor de Roma según quien recomienda la lista</div>
-            <div class="tags"><span class="tag t-eat">gelato</span><span class="tag t-must">la mejor</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="sec">
-        <div class="sec-label">Noche</div>
-        <div class="item">
-          <div class="item-time">20:30</div>
-          <div class="item-dot"><span class="dot d-eat"></span></div>
-          <div class="item-content">
-            <div class="item-name">Cena: Da Felice a Testaccio</div>
-            <div class="item-sub">Uno de los mejores de Roma — reservar con semanas de antelación</div>
-            <div class="tags"><span class="tag t-eat">cena</span><span class="tag t-book">reservar con antelación</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">23:00</div>
-          <div class="item-dot"><span class="dot d-bar"></span></div>
-          <div class="item-content">
-            <div class="item-name">Antros: Alcazar · Naos · The Circle · Sanctuary</div>
-            <div class="item-sub">Verificar cuál abre ese viernes</div>
-            <div class="tags"><span class="tag t-bar">antro</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── DÍA 4 · 28 JUN ── -->
-  <div class="day" id="d4">
-    <div class="day-hd" onclick="tog('d4')">
-      <div class="day-num">28</div>
-      <div class="day-info">
-        <div class="day-name">Panteón · Navona · Campo de Fiori</div>
-        <div class="day-date">Sábado 28 de junio</div>
-      </div>
-      <div class="day-tag">Centro storico</div>
-      <div class="caret">▾</div>
-    </div>
-    <div class="day-bd">
-      <div class="sec">
-        <div class="sec-label">Mañana temprano (si aplica)</div>
-        <div class="item">
-          <div class="item-time">07:00</div>
-          <div class="item-dot"><span class="dot d-must"></span></div>
-          <div class="item-content">
-            <div class="item-name must">★ Porta Portese (solo domingos · 6 am–2 pm)</div>
-            <div class="item-sub">Si el 28 cae domingo — uno de los mercados de pulgas más grandes de Europa. No perdérselo.</div>
-            <div class="tags"><span class="tag t-must">solo domingos</span><span class="tag t-sight">mercado</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="sec">
-        <div class="sec-label">Mañana</div>
-        <div class="item">
-          <div class="item-time">09:00</div>
-          <div class="item-dot"><span class="dot d-must"></span></div>
-          <div class="item-content">
-            <div class="item-name must">★ Panteón</div>
-            <div class="item-sub">Boletos ya comprados ✓ · Hora reservada 9:00–10:00 · Ir puntual · La oculus es mágica</div>
-            <div class="tags"><span class="tag t-must">imperdible</span><span class="tag t-book">✓ reservado · 9:00 am</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">10:30</div>
-          <div class="item-dot"><span class="dot d-eat"></span></div>
-          <div class="item-content">
-            <div class="item-name">Gelato: Giolitti · La Palma · Frigidarium (Navona)</div>
-            <div class="item-sub">Giolitti = más famoso · La Palma = 100+ sabores · Frigidarium = bañan en chocolate</div>
-            <div class="tags"><span class="tag t-eat">gelato</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">11:00</div>
-          <div class="item-dot"><span class="dot d-must"></span></div>
-          <div class="item-content">
-            <div class="item-name must">★ Piazza Navona + Fontana dei Quattro Fiumi</div>
-            <div class="item-sub">Bernini en su máxima expresión — la mejor piazza de Roma</div>
-            <div class="tags"><span class="tag t-must">imperdible</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">12:00</div>
-          <div class="item-dot"><span class="dot d-bar"></span></div>
-          <div class="item-content">
-            <div class="item-name">Bar del Fico o Drink Art Gallery (Navona)</div>
-            <div class="item-sub">Aperitivo al borde de la piazza — uno de los momentos más romanos del viaje</div>
-            <div class="tags"><span class="tag t-bar">aperitivo</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="sec">
-        <div class="sec-label">Mediodía</div>
-        <div class="item">
-          <div class="item-time">13:30</div>
-          <div class="item-dot"><span class="dot d-eat"></span></div>
-          <div class="item-content">
-            <div class="item-name">Almuerzo: Obika Mozzarella Bar (Largo Argentina)</div>
-            <div class="item-sub">Pizzas gourmet con mozzarella di bufala — diferente y muy bueno</div>
-            <div class="tags"><span class="tag t-eat">almuerzo</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">14:30</div>
-          <div class="item-dot"><span class="dot d-sight"></span></div>
-          <div class="item-content">
-            <div class="item-name">Largo Argentina — ruinas y gatos de Roma</div>
-            <div class="item-sub">Donde asesinaron a Julio César · Los gatos rescatados que viven entre las ruinas</div>
-            <div class="tags"><span class="tag t-sight">historia</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">15:30</div>
-          <div class="item-dot"><span class="dot d-sight"></span></div>
-          <div class="item-content">
-            <div class="item-name">Campo de Fiori</div>
-            <div class="item-sub">Plaza animada · Argot bar para una copa · Roscioli si no fue en el desayuno</div>
-            <div class="tags"><span class="tag t-sight">plaza</span><span class="tag t-bar">Argot</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="sec">
-        <div class="sec-label">Tarde</div>
-        <div class="item">
-          <div class="item-time">16:30</div>
-          <div class="item-dot"><span class="dot d-sight"></span></div>
-          <div class="item-content">
-            <div class="item-name">Rooftop La Rinascente (Via del Tritone)</div>
-            <div class="item-sub">Terraza bar con vistas sobre tejados y el Panteón — gratis si solo toman algo</div>
-            <div class="tags"><span class="tag t-sight">rooftop</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">17:15</div>
-          <div class="item-dot"><span class="dot d-sight"></span></div>
-          <div class="item-content">
-            <div class="item-name">Pincio → Scalinata di Spagna</div>
-            <div class="item-sub">Bajar caminando — atardecer con vistas sobre Roma</div>
-            <div class="tags"><span class="tag t-sight">paseo</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">18:30</div>
-          <div class="item-dot"><span class="dot d-eat"></span></div>
-          <div class="item-content">
-            <div class="item-name">Tiramisu: Pompi (Fontana di Trevi)</div>
-            <div class="item-sub">A pasos del hotel — el mejor tiramisu de Roma. Comer en la piazza.</div>
-            <div class="tags"><span class="tag t-eat">postre</span><span class="tag t-must">imperdible</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="sec">
-        <div class="sec-label">Noche — Última noche en Roma</div>
-        <div class="item">
-          <div class="item-time">20:00</div>
-          <div class="item-dot"><span class="dot d-bar"></span></div>
-          <div class="item-content">
-            <div class="item-name">Rooftop: Terrazza Borromini (Piazza Navona)</div>
-            <div class="item-sub">Caro pero la vista 360° vale la pena para despedir Roma</div>
-            <div class="tags"><span class="tag t-bar">rooftop</span><span class="tag t-must">mejor vista</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">21:30</div>
-          <div class="item-dot"><span class="dot d-eat"></span></div>
-          <div class="item-content">
-            <div class="item-name">Cena: La Montecarlo o Baffetto (Navona)</div>
-            <div class="item-sub">Pizza romana finísima y crujiente — las más históricas de Roma</div>
-            <div class="tags"><span class="tag t-eat">cena</span><span class="tag t-must">pizza romana</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">23:30</div>
-          <div class="item-dot"><span class="dot d-bar"></span></div>
-          <div class="item-content">
-            <div class="item-name">Última copa: Pimm's Good · Ombre Rosse · antigallery (Monti)</div>
-            <div class="item-sub">antigallery = spritz baratísimo en plazuela local encantadora</div>
-            <div class="tags"><span class="tag t-bar">última noche</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="note">💡 Maletas listas esta noche — el tren sale a las 8:50 am. Check-out del hotel o dejar maletas en consigna antes de salir.</div>
-    </div>
-  </div>
-
-  <!-- ── DÍA 5 · 29 JUN ── -->
-  <div class="day" id="d5">
-    <div class="day-hd" onclick="tog('d5')">
-      <div class="day-num">29</div>
-      <div class="day-info">
-        <div class="day-name">Salida a Florencia 🚂</div>
-        <div class="day-date">Domingo 29 de junio · Tren 8:50 am</div>
-      </div>
-      <div class="day-tag">Mañana corta</div>
-      <div class="caret">▾</div>
-    </div>
-    <div class="day-bd">
-      <div class="sec">
-        <div class="sec-label">Mañana</div>
-        <div class="item">
-          <div class="item-time">06:30</div>
-          <div class="item-dot"><span class="dot d-tip"></span></div>
-          <div class="item-content">
-            <div class="item-name">Despertar · Maletas listas de la noche anterior</div>
-            <div class="item-sub">Termini está a ~15 min del hotel en metro o taxi</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">07:00</div>
-          <div class="item-dot"><span class="dot d-eat"></span></div>
-          <div class="item-content">
-            <div class="item-name">Desayuno: Mercato Centrale (Termini)</div>
-            <div class="item-sub">Dentro de la estación — uno de los mejores mercados gastronómicos de Roma. Ir directo con maletas.</div>
-            <div class="tags"><span class="tag t-eat">desayuno</span><span class="tag t-must">muy recomendado</span></div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">08:20</div>
-          <div class="item-dot"><span class="dot d-tip"></span></div>
-          <div class="item-content">
-            <div class="item-name">Andén — Trenitalia / Italo a Florencia</div>
-            <div class="item-sub">Llegar al andén 30 min antes con maletas</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item-time">08:50</div>
-          <div class="item-dot"><span class="dot d-must"></span></div>
-          <div class="item-content">
-            <div class="item-name">🚂 Partenza per Firenze!</div>
-          </div>
-        </div>
-      </div>
-      <div class="note">💡 Si el checkout es a las 11am, dejar maletas en la consigna de Termini y dar una última vuelta antes del tren.</div>
-    </div>
-  </div>
-
-  <!-- PENDIENTES -->
-  <div class="pending">
-    <h3>📋 Pendiente por reservar</h3>
-    <ul>
-      <li>Da Felice a Testaccio <em>— reservar con semanas de antelación</em></li>
-      <li>Da Enzo al 29 (Trastevere) <em>— si se planea ir</em></li>
-      <li>Terrazza Borromini <em>— verificar si requiere reserva</em></li>
-    </ul>
-  </div>
-
-  <!-- TICKETS -->
-  <div class="pending" style="margin-top:16px;">
-    <h3>🎫 Entradas y boletos</h3>
-    <ul style="gap:10px;">
-      <li style="justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-        <div>
-          <strong>Museos Vaticanos + Capilla Sixtina</strong>
-          <div style="font-size:12px;color:var(--muted);margin-top:2px;">26 jun · 9:00 am · Tania, Marycruz, Maria Jose</div>
-        </div>
-        <a href="tickets/ticket_vaticano.pdf" target="_blank" style="font-size:12px;font-weight:600;color:var(--white);background:var(--terra);padding:6px 14px;border-radius:99px;text-decoration:none;white-space:nowrap;flex-shrink:0;">Ver boleto →</a>
-      </li>
-      <li style="justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-        <div>
-          <strong>Castel Sant'Angelo</strong>
-          <div style="font-size:12px;color:var(--muted);margin-top:2px;">26 jun · 2:00 pm · Tania, Marycruz, Maria Jose</div>
-        </div>
-        <a href="tickets/ticket_santangelo.pdf" target="_blank" style="font-size:12px;font-weight:600;color:var(--white);background:var(--terra);padding:6px 14px;border-radius:99px;text-decoration:none;white-space:nowrap;flex-shrink:0;">Ver boleto →</a>
-      </li>
-      <li style="justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-        <div>
-          <strong>Basílica de San Pedro</strong>
-          <div style="font-size:12px;color:var(--muted);margin-top:2px;">26 jun · 3:00 pm · Tania, Marycruz, Maria Jose</div>
-        </div>
-        <a href="tickets/ticket_sanpedro.pdf" target="_blank" style="font-size:12px;font-weight:600;color:var(--white);background:var(--terra);padding:6px 14px;border-radius:99px;text-decoration:none;white-space:nowrap;flex-shrink:0;">Ver boleto →</a>
-      </li>
-      <li style="justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-        <div>
-          <strong>Coliseo + Foro Romano + Palatino</strong>
-          <div style="font-size:12px;color:var(--muted);margin-top:2px;">27 jun · 12:00 pm · Tania, Marycruz, Maria Jose</div>
-        </div>
-        <a href="tickets/ticket_coliseo.pdf" target="_blank" style="font-size:12px;font-weight:600;color:var(--white);background:var(--terra);padding:6px 14px;border-radius:99px;text-decoration:none;white-space:nowrap;flex-shrink:0;">Ver boleto →</a>
-      </li>
-      <li style="justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-        <div>
-          <strong>Panteón</strong>
-          <div style="font-size:12px;color:var(--muted);margin-top:2px;">28 jun · 9:00 am · Tania, Marycruz, Maria Jose</div>
-        </div>
-        <a href="tickets/ticket_panteon.pdf" target="_blank" style="font-size:12px;font-weight:600;color:var(--white);background:var(--terra);padding:6px 14px;border-radius:99px;text-decoration:none;white-space:nowrap;flex-shrink:0;">Ver boleto →</a>
-      </li>
-    </ul>
-  </div>
-
-  <!-- QUICK REF -->
-  <div class="qr-grid">
-    <div class="qr-card">
-      <div class="qr-title">🍕 Quick bites</div>
-      <ul class="qr-list">
-        <li>Alice Pizza <span>Largo Argentina/Vaticano</span></li>
-        <li>300 Gradi <span>Vaticano · panini</span></li>
-        <li>Mercato Centrale <span>Termini · todo</span></li>
-        <li>Pastificio Guerra <span>Piazza di Spagna</span></li>
-        <li>Pippo Tortellino <span>pasta para llevar</span></li>
-      </ul>
-    </div>
-    <div class="qr-card">
-      <div class="qr-title">🍦 Gelaterías</div>
-      <ul class="qr-list">
-        <li>La Romana ⭐ <span>la favorita</span></li>
-        <li>Frigidarium <span>Navona · en chocolate</span></li>
-        <li>Old Bridge <span>Vaticano · madrugar</span></li>
-        <li>Giolitti <span>Panteón · la más famosa</span></li>
-        <li>Venchi <span>Via del Corso</span></li>
-        <li>Grom <span>Campo de Fiori</span></li>
-      </ul>
-    </div>
-    <div class="qr-card">
-      <div class="qr-title">🍷 Bares Trastevere</div>
-      <ul class="qr-list">
-        <li>Freni e Frizioni <span>animado</span></li>
-        <li>Ombre Rosse <span>terraza</span></li>
-        <li>Pimm's Good <span>buena vibra</span></li>
-        <li>San Callisto <span>100% local</span></li>
-      </ul>
-    </div>
-    <div class="qr-card">
-      <div class="qr-title">🎭 Antros</div>
-      <ul class="qr-list">
-        <li>Alcazar <span>—</span></li>
-        <li>Naos <span>—</span></li>
-        <li>The Circle <span>—</span></li>
-        <li>Sanctuary <span>—</span></li>
-      </ul>
-    </div>
-    <div class="qr-card">
-      <div class="qr-title">🍮 Dulces romanos</div>
-      <ul class="qr-list">
-        <li>Pompi <span>tiramisu · cerca Trevi</span></li>
-        <li>Regoli <span>maritozzo · Monti</span></li>
-        <li>Roscioli <span>maritozzo · C. de Fiori</span></li>
-        <li>Maritozzaro <span>maritozzo · Trastevere</span></li>
-      </ul>
-    </div>
-    <div class="qr-card">
-      <div class="qr-title">🏛 Rooftops</div>
-      <ul class="qr-list">
-        <li>Terrazza Borromini <span>Navona · $$$ wow</span></li>
-        <li>Atlante Star <span>Vaticano</span></li>
-        <li>Ozio <span>Vaticano · aperitivo</span></li>
-        <li>La Rinascente <span>Via del Tritone</span></li>
-      </ul>
-    </div>
-  </div>
-
-</div>
-
-<div class="footer">Roma · Junio 2025 &nbsp;·&nbsp; Aggiornato con amore 🇮🇹</div>
-
+    <p class="foot">Toca cada actividad para tacharla · se guarda en tu teléfono · Roma 🇮🇹</p>
+  </main>
 <script>
-function tog(id) {
-  document.getElementById(id).classList.toggle('open');
-}
+(function(){
+  var KEY="itin-roma",store={};
+  try{store=JSON.parse(localStorage.getItem(KEY)||"{}");}catch(e){store={};}
+  var checks=document.querySelectorAll(".chk");
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(store));}catch(e){}}
+  function rDay(d){var t=+d.dataset.count,n=d.querySelectorAll(".chk:checked").length;
+    d.querySelector(".d-prog-num").textContent=n+"/"+t;d.classList.toggle("done",n===t&&t>0);}
+  function rAll(){var n=document.querySelectorAll(".chk:checked").length,t=checks.length;
+    document.getElementById("overallNum").textContent=n+"/"+t;
+    document.getElementById("overallBar").style.width=(t?n/t*100:0)+"%";}
+  checks.forEach(function(ch){var k=ch.dataset.k;if(store[k])ch.checked=true;
+    ch.addEventListener("change",function(){if(ch.checked)store[k]=1;else delete store[k];
+      save();rDay(ch.closest(".day"));rAll();});});
+  document.querySelectorAll(".day").forEach(rDay);rAll();
+  document.getElementById("resetBtn").addEventListener("click",function(){
+    if(!confirm("¿Borrar todos los checks de Roma?"))return;store={};save();
+    checks.forEach(function(c){c.checked=false;});document.querySelectorAll(".day").forEach(rDay);rAll();});
+})();
 </script>
-</body>
-</html>
+</body></html>
